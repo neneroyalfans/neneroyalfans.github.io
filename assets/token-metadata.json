@@ -1,0 +1,21 @@
+{
+  "name": "Nene Royal Fans",
+  "symbol": "NeneTH",
+  "description": "NeneTH is an independent fan-community token created by Nene Royal fans to celebrate Nene’s music, journey and achievements.\n\n🇹🇭 From Thailand to the world 🌎\n👑 Fan community: @NeneRoyalFans\n\nThis is an independent fan project and is not an official token of Nene Royal, AGT, NBC or any affiliated organization. It does not represent ownership, endorsement, or a promise of profit.",
+  "image": "https://neneroyalfans.github.io/assets/logo.png",
+  "external_url": "https://neneroyalfans.github.io/",
+  "properties": {
+    "category": "community",
+    "files": [
+      {
+        "uri": "https://neneroyalfans.github.io/assets/logo.png",
+        "type": "image/png"
+      }
+    ]
+  },
+  "extensions": {
+    "website": "https://neneroyalfans.github.io/",
+    "twitter": "https://x.com/NeneRoyalFans",
+    "telegram": "https://t.me/NeneRoyalFans"
+  }
+}
