@@ -1,4 +1,4 @@
-Nene Royal Fans Website v1
+Nene Royal Fans Website v3
 
 Files:
 - index.html
@@ -14,3 +14,5 @@ How to use:
 Notes:
 - Update social links if the official handles/URLs change.
 - NeneTH is presented as an independent fan/community token concept, not an official token.
+
+V3: Mobile polish, Telegram navigation/CTA, Grand Finale countdown, and expanded video/music section.
