@@ -1,4 +1,4 @@
-Nene Royal Fans Website v3
+Nene Royal Fans Website v4
 
 Files:
 - index.html
@@ -16,3 +16,5 @@ Notes:
 - NeneTH is presented as an independent fan/community token concept, not an official token.
 
 V3: Mobile polish, Telegram navigation/CTA, Grand Finale countdown, and expanded video/music section.
+
+V4 update: SEO/meta tags, social preview, mobile navigation, support CTA, clearer NeneTH positioning.
