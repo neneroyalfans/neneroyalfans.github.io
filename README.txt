@@ -1,4 +1,4 @@
-Nene Royal Fans Website v5
+Nene Royal Fans Website v5.1
 
 Files:
 - index.html
@@ -20,3 +20,5 @@ V3: Mobile polish, Telegram navigation/CTA, Grand Finale countdown, and expanded
 V4 update: SEO/meta tags, social preview, mobile navigation, support CTA, clearer NeneTH positioning.
 
 V5 update: fixed desktop navigation/hamburger behavior and added a live community status badge.
+
+V5.1 update: synchronized index.html and styles.css so the deployed site uses the complete V5 markup and fixes.
