@@ -16,7 +16,7 @@ button{width:100%;padding:14px;margin-top:12px;border:0;border-radius:10px;font-
 <body>
 <div class="card">
 <h1>👑 NeneTH — Revoke Mint Authority</h1>
-<p class="muted">Solana Mainnet • No service fee • Phantom signs the SPL Token transaction.</p>
+<p class="muted">Solana Mainnet • Official public RPC • No service fee • Phantom signs the SPL Token transaction.</p>
 <div class="box">
 <b>Token</b><br>Nene Royal Fans (NeneTH)<br><br>
 <b>Mint</b><br><code id="mintText"></code><br><br>
@@ -34,7 +34,7 @@ import { AuthorityType, TOKEN_PROGRAM_ID, createSetAuthorityInstruction, getMint
 
 const MINT = new PublicKey("F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5");
 const EXPECTED_AUTHORITY = new PublicKey("Gc8zrvYcrrgeDaGH2svBAtL3VByR6GW34ghg1H4i35gA");
-const connection = new Connection("https://api.mainnet-beta.solana.com", "confirmed");
+const connection = new Connection("https://api.mainnet.solana.com", "confirmed");
 
 document.querySelector("#mintText").textContent = MINT.toBase58();
 document.querySelector("#authorityText").textContent = EXPECTED_AUTHORITY.toBase58();
