@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NeneTH transparency page: token supply, authority status, wallet allocations, founder vesting, Raydium liquidity and LP lock proofs." />
+  <title>NeneTH Transparency | Nene Royal Fans</title>
+  <style>
+    :root{
+      --bg:#07090d;
+      --panel:#0f131c;
+      --panel2:#151a25;
+      --text:#f7f3ef;
+      --muted:#aab2c0;
+      --gold:#e6b86d;
+      --rose:#f1a3b9;
+      --pink:#ff4fa3;
+      --purple:#8c67ff;
+      --cyan:#52d9ff;
+      --green:#74e2a7;
+      --line:#2a3040;
+      --shadow:0 18px 60px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(140,103,255,.18), transparent 34%),
+        radial-gradient(circle at 85% 20%, rgba(255,79,163,.13), transparent 30%),
+        linear-gradient(180deg,#07090d,#090b11 55%,#07090d);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{color:inherit}
+    .wrap{max-width:1180px;margin:0 auto;padding:24px}
+    .hero{
+      padding:72px 0 42px;
+      text-align:center;
+    }
+    .eyebrow{
+      text-transform:uppercase;letter-spacing:.22em;font-size:12px;color:var(--gold);font-weight:700;
+    }
+    h1{
+      margin:10px 0 10px;
+      font-family:Georgia,serif;
+      font-size:clamp(42px,7vw,82px);
+      line-height:1;
+      background:linear-gradient(90deg,#fff0d1,#f1c88d,#f4adc1);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .sub{max-width:820px;margin:0 auto;color:#c8cfda;font-size:18px}
+    .badge-row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:28px}
+    .badge{
+      border:1px solid rgba(230,184,109,.35);
+      background:rgba(17,20,29,.72);
+      padding:10px 14px;border-radius:999px;font-size:14px;
+      box-shadow:inset 0 0 30px rgba(255,255,255,.02);
+    }
+    .badge.ok{color:var(--green)}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+    .card{
+      background:linear-gradient(180deg,rgba(20,24,34,.96),rgba(12,15,22,.96));
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+    .span-12{grid-column:span 12}
+    .span-8{grid-column:span 8}
+    .span-6{grid-column:span 6}
+    .span-4{grid-column:span 4}
+    .title{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:800;margin-bottom:12px}
+    .big{font-size:32px;font-weight:800;line-height:1.15}
+    .muted{color:var(--muted)}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-all;font-size:13px}
+    .rows{display:grid;gap:10px}
+    .row{
+      display:flex;gap:16px;justify-content:space-between;align-items:flex-start;
+      padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)
+    }
+    .row:last-child{border-bottom:0}
+    .label{color:var(--muted)}
+    .value{text-align:right;font-weight:700}
+    .alloc{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .alloc .mini{
+      padding:18px;border-radius:16px;background:#10141d;border:1px solid #2b3141;text-align:center
+    }
+    .pct{font-size:28px;font-weight:900;margin:3px 0}
+    .founder .pct{color:var(--rose)}
+    .treasury .pct{color:var(--gold)}
+    .community .pct{color:#b890ff}
+    .liquidity .pct{color:var(--cyan)}
+    .proofs{display:grid;gap:12px}
+    .proof{
+      display:flex;justify-content:space-between;gap:16px;align-items:center;
+      padding:14px 16px;border:1px solid #303747;border-radius:14px;background:#0c1017
+    }
+    .proof a{
+      text-decoration:none;color:#fff;background:linear-gradient(90deg,#6c52ff,#c84cff);
+      padding:9px 12px;border-radius:10px;font-weight:700;white-space:nowrap
+    }
+    .warning{
+      border:1px solid rgba(230,184,109,.35);
+      background:rgba(230,184,109,.07);
+      color:#f2dfbf;
+      padding:16px 18px;border-radius:14px;
+    }
+    .channels{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .channel{
+      display:block;text-decoration:none;padding:16px;border-radius:14px;border:1px solid #303747;
+      background:#0e121a;
+    }
+    .channel strong{display:block;font-size:17px}
+    footer{text-align:center;color:#858e9e;padding:42px 0 54px;font-size:13px}
+    .copy-btn{
+      border:1px solid #3b4253;background:#151a24;color:white;border-radius:8px;padding:7px 9px;cursor:pointer
+    }
+    .copyline{display:flex;gap:8px;align-items:center;justify-content:flex-end}
+    @media(max-width:850px){
+      .span-8,.span-6,.span-4{grid-column:span 12}
+      .alloc,.channels{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:560px){
+      .wrap{padding:16px}
+      .hero{padding-top:44px}
+      .alloc,.channels{grid-template-columns:1fr}
+      .row{display:block}
+      .value{text-align:left;margin-top:5px}
+      .proof{display:block}
+      .proof a{display:inline-block;margin-top:10px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Nene Royal Fans • Solana Mainnet</div>
+      <h1>NeneTH Transparency</h1>
+      <p class="sub">Public on-chain information for the independent NeneTH fan-community token project, including supply controls, allocation wallets, founder vesting, Raydium liquidity, and LP lock proof.</p>
+      <div class="badge-row">
+        <span class="badge ok">✓ Mint Authority Revoked</span>
+        <span class="badge ok">✓ Freeze Authority Revoked</span>
+        <span class="badge ok">✓ Founder Vesting Active</span>
+        <span class="badge ok">✓ LP Locked 365 Days</span>
+      </div>
+    </section>
+
+    <main class="grid">
+      <section class="card span-8">
+        <div class="title">Token Overview</div>
+        <div class="big">Nene Royal Fans <span style="color:var(--rose)">(NeneTH)</span></div>
+        <div class="rows" style="margin-top:16px">
+          <div class="row"><div class="label">Network</div><div class="value">Solana Mainnet</div></div>
+          <div class="row"><div class="label">Total Supply</div><div class="value">1,000,000,000 NeneTH</div></div>
+          <div class="row"><div class="label">Decimals</div><div class="value">9</div></div>
+          <div class="row">
+            <div class="label">Mint Address</div>
+            <div class="value copyline">
+              <span class="mono" id="mint">F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5</span>
+              <button class="copy-btn" onclick="copyText('mint')">Copy</button>
+            </div>
+          </div>
+          <div class="row"><div class="label">Mint Authority</div><div class="value" style="color:var(--green)">Revoked / None</div></div>
+          <div class="row"><div class="label">Freeze Authority</div><div class="value" style="color:var(--green)">Revoked / None</div></div>
+        </div>
+      </section>
+
+      <section class="card span-4">
+        <div class="title">Verification</div>
+        <p class="muted">The project publishes its main proofs publicly so community members can verify them independently.</p>
+        <div class="warning">NeneTH is an independent fan-community project and is not an official token of Nene Royal, AGT, NBC, or any affiliated organization.</div>
+      </section>
+
+      <section class="card span-12">
+        <div class="title">Token Allocation</div>
+        <div class="alloc">
+          <div class="mini founder"><div>Founder</div><div class="pct">20%</div><div class="muted">200,000,000</div></div>
+          <div class="mini treasury"><div>Treasury</div><div class="pct">50%</div><div class="muted">500,000,000</div></div>
+          <div class="mini community"><div>Community</div><div class="pct">20%</div><div class="muted">200,000,000</div></div>
+          <div class="mini liquidity"><div>Liquidity</div><div class="pct">10%</div><div class="muted">100,000,000</div></div>
+        </div>
+      </section>
+
+      <section class="card span-6">
+        <div class="title">Allocation Wallets</div>
+        <div class="rows">
+          <div class="row"><div class="label">Founder 20%</div><div class="value mono">Gc8zrvYcrrgeDaGH2svBAtL3VByR6GW34ghg1H4i35gA</div></div>
+          <div class="row"><div class="label">Treasury 50%</div><div class="value mono">BftuVZMhMEZ8Zf3zUrvQ7834K1hsHSWtVAXL5vFQ9Tfd</div></div>
+          <div class="row"><div class="label">Community 20%</div><div class="value mono">DnEV5NCKuPdp1JMDUzYrNMXN6B2oTKqHuK55C6XdfELb</div></div>
+          <div class="row"><div class="label">Liquidity 10%</div><div class="value mono">8MurAZW7PMEu9pRGi1XF1Spv3YjCUEQ5VMCf19o61YnU</div></div>
+        </div>
+      </section>
+
+      <section class="card span-6">
+        <div class="title">Founder Vesting</div>
+        <div class="rows">
+          <div class="row"><div class="label">Vested Amount</div><div class="value">200,000,000 NeneTH</div></div>
+          <div class="row"><div class="label">Start</div><div class="value">6 Mar 2027</div></div>
+          <div class="row"><div class="label">Schedule</div><div class="value">Monthly • 12 months</div></div>
+          <div class="row"><div class="label">Contract</div><div class="value">Immutable • Non-transferable</div></div>
+          <div class="row"><div class="label">Contract ID</div><div class="value mono">4tfcg6RNAecsF5jPHtUdTabbi1XNLQa5yxJLfZJ626Lw</div></div>
+        </div>
+      </section>
+
+      <section class="card span-6">
+        <div class="title">Raydium CPMM Pool</div>
+        <div class="rows">
+          <div class="row"><div class="label">Pair</div><div class="value">NeneTH / USDC</div></div>
+          <div class="row"><div class="label">Initial Liquidity</div><div class="value">100,000,000 NeneTH + 60 USDC</div></div>
+          <div class="row"><div class="label">Initial Price</div><div class="value">0.0000006 USDC / NeneTH</div></div>
+          <div class="row"><div class="label">Fee Tier</div><div class="value">0.25%</div></div>
+          <div class="row"><div class="label">Pool ID</div><div class="value mono">5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A</div></div>
+        </div>
+      </section>
+
+      <section class="card span-6">
+        <div class="title">LP Lock</div>
+        <div class="rows">
+          <div class="row"><div class="label">Locked LP</div><div class="value">2,449.49 USDC–NeneTH LP</div></div>
+          <div class="row"><div class="label">Duration</div><div class="value">365 Days</div></div>
+          <div class="row"><div class="label">Unlock Date</div><div class="value">7 Sep 2027</div></div>
+          <div class="row"><div class="label">Lock ID</div><div class="value">#1788794148557</div></div>
+          <div class="row"><div class="label">Status</div><div class="value" style="color:var(--green)">Active / Verified On-Chain</div></div>
+        </div>
+      </section>
+
+      <section class="card span-12">
+        <div class="title">Public Proofs</div>
+        <div class="proofs">
+          <div class="proof">
+            <div><strong>Solana Mint</strong><div class="muted mono">F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5</div></div>
+            <a href="https://solscan.io/token/F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank" rel="noopener">View on Solscan</a>
+          </div>
+          <div class="proof">
+            <div><strong>Founder Vesting — Streamflow</strong><div class="muted">200M NeneTH • immutable vesting contract</div></div>
+            <a href="https://app.streamflow.finance/contract/solana/mainnet/4tfcg6RNAecsF5jPHtUdTabbi1XNLQa5yxJLfZJ626Lw" target="_blank" rel="noopener">View Vesting</a>
+          </div>
+          <div class="proof">
+            <div><strong>Raydium CPMM Pool</strong><div class="muted mono">5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A</div></div>
+            <a href="https://solscan.io/account/5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A" target="_blank" rel="noopener">View Pool On-Chain</a>
+          </div>
+          <div class="proof">
+            <div><strong>LP Lock — StakePoint</strong><div class="muted">2,449.49 LP • 365 days • unlock 7 Sep 2027</div></div>
+            <a href="https://stakepoint.app/locks/cmtrdumzq0000la0428zyv235" target="_blank" rel="noopener">View LP Lock</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="card span-12">
+        <div class="title">Official Channels</div>
+        <div class="channels">
+          <a class="channel" href="https://neneroyalfans.github.io/" target="_blank" rel="noopener"><strong>Website</strong><span class="muted">neneroyalfans.github.io</span></a>
+          <a class="channel" href="https://x.com/NeneRoyalFans" target="_blank" rel="noopener"><strong>X / Twitter</strong><span class="muted">@NeneRoyalFans</span></a>
+          <a class="channel" href="https://t.me/NeneRoyalFans" target="_blank" rel="noopener"><strong>Telegram</strong><span class="muted">t.me/NeneRoyalFans</span></a>
+        </div>
+      </section>
+
+      <section class="card span-12">
+        <div class="title">Disclaimer</div>
+        <p class="muted" style="margin:0">
+          NeneTH is an independent fan-community token created by Nene Royal fans to celebrate Nene's music, journey, and achievements.
+          This is an independent fan project and is not an official token of Nene Royal, AGT, NBC, or any affiliated organization.
+          It does not represent ownership, endorsement, equity, or a promise of profit.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      Nene Royal Fans • From Thailand to the world 🌎<br>
+      Public proofs are provided for transparency and independent verification.
+    </footer>
+  </div>
+
+  <script>
+    function copyText(id){
+      const el = document.getElementById(id);
+      navigator.clipboard.writeText(el.textContent.trim()).then(()=>{
+        const old = event.target.textContent;
+        event.target.textContent = "Copied";
+        setTimeout(()=>event.target.textContent = old, 1200);
+      });
+    }
+  </script>
+</body>
+</html>
