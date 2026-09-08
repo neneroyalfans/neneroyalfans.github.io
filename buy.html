@@ -1,146 +1,135 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="description" content="Buy NeneTH on Solana using the embedded Jupiter swap interface." />
-<meta name="theme-color" content="#09080d" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#09070d">
 <title>Buy NeneTH | Nene Royal Fans</title>
+<meta name="description" content="Buy NeneTH on Solana. Desktop uses Jupiter embedded swap; mobile opens Jupiter directly.">
 <script src="https://plugin.jup.ag/plugin-v1.js" data-preload defer></script>
 <style>
-:root{--bg:#08070c;--panel:#121018;--line:#31283b;--text:#fff9f6;--muted:#aaa3b3;--gold:#e9bc73;--rose:#f3a1bd;--green:#73e2a7}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(circle at 12% 10%,rgba(141,106,255,.18),transparent 30%),radial-gradient(circle at 88% 15%,rgba(255,93,169,.16),transparent 28%),linear-gradient(180deg,#07060a,#0a0810 55%,#07060a);min-height:100vh}a{color:inherit}.wrap{width:min(1180px,calc(100% - 32px));margin:auto}nav{position:sticky;top:0;z-index:20;background:rgba(7,6,10,.78);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.07)}.navin{height:70px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-weight:800}.brand img{width:40px;height:40px;border-radius:50%;object-fit:cover;border:1px solid rgba(233,188,115,.45)}.navlinks{display:flex;align-items:center;gap:16px}.navlinks a{text-decoration:none;color:#d7d0db;font-size:14px}.navlinks .cta{padding:10px 14px;border-radius:999px;background:linear-gradient(90deg,#d18b56,#ff68ad);color:#12080e;font-weight:900}.hero{padding:72px 0 36px;text-align:center}.eyebrow{text-transform:uppercase;letter-spacing:.2em;color:var(--gold);font-size:12px;font-weight:800}h1{font-family:Georgia,serif;font-size:clamp(48px,8vw,92px);line-height:.98;margin:12px 0;background:linear-gradient(90deg,#fff3da,#e9bc73,#f29fbd);-webkit-background-clip:text;background-clip:text;color:transparent}.lead{max-width:760px;margin:0 auto;color:#c8c0cc;font-size:18px}.ca{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:10px 12px;border-radius:12px;background:#100d14;border:1px solid #302738;max-width:100%}.ca code{font-size:12px;word-break:break-all}.copy{border:1px solid #4a3b56;background:#1b1520;color:white;border-radius:8px;padding:7px 9px;cursor:pointer}.main{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);gap:24px;align-items:start;padding:24px 0 42px}.card{background:linear-gradient(180deg,rgba(22,18,27,.96),rgba(12,10,16,.96));border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 22px 70px rgba(0,0,0,.35)}.card h2{font-size:26px;margin:0 0 8px}.sub{color:var(--muted);margin:0 0 18px}#jupiter-plugin{min-height:510px;border-radius:18px;overflow:hidden;background:#0b0910}#plugin-status{padding:14px;text-align:center;color:#a8a0ad;font-size:13px}.trust{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.item{padding:14px;border:1px solid #30283a;background:#100d15;border-radius:14px}.item strong{display:block;color:var(--green);font-size:14px}.item span{color:#a9a1ae;font-size:12px}.warning{margin-top:16px;padding:14px 16px;border-radius:14px;border:1px solid rgba(233,188,115,.34);background:rgba(233,188,115,.07);color:#ead8b9;font-size:13px}.proofs{display:grid;gap:11px;margin-top:18px}.proof{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 14px;background:#0f0c13;border:1px solid #302739;border-radius:13px;text-decoration:none}.proof strong{font-size:14px}.proof span{font-size:12px;color:var(--muted)}.arrow{color:var(--rose);font-size:20px}.market{margin-top:18px;padding-top:18px;border-top:1px solid #2c2434}.marketbuttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{display:block;text-align:center;text-decoration:none;padding:12px;border-radius:12px;border:1px solid #3c3047;background:#15101a;font-weight:800;font-size:14px}.btn.primary{background:linear-gradient(90deg,#7257f5,#d54e9d);border:0}footer{padding:28px 0 50px;text-align:center;color:#817988;font-size:12px}.note{max-width:900px;margin:0 auto}@media(max-width:850px){.main{grid-template-columns:1fr}.navlinks a:not(.cta){display:none}.hero{padding-top:48px}}@media(max-width:520px){.wrap{width:min(100% - 20px,1180px)}.card{padding:15px}.trust,.marketbuttons{grid-template-columns:1fr}#jupiter-plugin{min-height:540px}.navin{height:62px}}
+:root{--bg:#08070c;--panel:#141019;--line:#34283c;--text:#fff8fb;--muted:#b7aebb;--pink:#ff6aaa;--gold:#e8b96e;--green:#72dda4}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+body{min-height:100vh;background:radial-gradient(circle at 15% 10%,rgba(122,89,255,.16),transparent 32%),radial-gradient(circle at 85% 15%,rgba(255,100,170,.14),transparent 28%),#08070c}
+a{color:inherit;text-decoration:none}.wrap{width:min(1120px,calc(100% - 28px));margin:auto}
+header{position:sticky;top:0;z-index:10;background:rgba(8,7,12,.94);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(14px)}
+.nav{height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}.brand img{width:42px;height:42px;border-radius:50%}
+.buypill{padding:10px 15px;border-radius:999px;background:linear-gradient(90deg,#e4a065,#ff6aaa);color:#180b11;font-weight:900}
+.hero{padding:52px 0 28px;text-align:center}.hero small{color:var(--gold);letter-spacing:.16em;font-weight:800}.hero h1{font-family:Georgia,serif;font-size:clamp(46px,8vw,82px);margin:8px 0 10px;background:linear-gradient(90deg,#ffe3b0,#f2bd72,#f7a8c7);-webkit-background-clip:text;color:transparent}.hero p{max-width:760px;margin:0 auto;color:#c9c0cd;font-size:17px}
+.ca{margin:20px auto 0;max-width:760px;border:1px solid #3a2e42;border-radius:13px;background:#110d15;padding:11px 12px;display:flex;gap:10px;align-items:center;justify-content:center}.ca code{font-size:12px;word-break:break-all}button{font:inherit}
+.copy{border:1px solid #493850;background:#1a141f;color:#fff;border-radius:9px;padding:8px 10px;cursor:pointer;white-space:nowrap}
+.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;padding:22px 0 42px}.card{background:linear-gradient(180deg,rgba(21,16,25,.97),rgba(12,9,15,.97));border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 24px 60px rgba(0,0,0,.34)}.card h2{margin:0 0 7px;font-size:25px}.sub{margin:0 0 16px;color:var(--muted);font-size:14px}
+.desktop-only{display:block}.mobile-only{display:none}#jupiter-plugin{min-height:510px;border-radius:16px;overflow:hidden;background:#09070d}#plugin-status{padding-top:10px;text-align:center;color:#aaa2ad;font-size:12px}
+.warn{margin-top:14px;border:1px solid rgba(232,185,110,.34);background:rgba(232,185,110,.07);color:#ead7b5;padding:13px 14px;border-radius:13px;font-size:12px}
+.trust{display:grid;grid-template-columns:1fr 1fr;gap:10px}.trust div{border:1px solid #30273a;background:#0f0c13;border-radius:12px;padding:12px}.trust b{display:block;color:var(--green);font-size:13px}.trust span{font-size:11px;color:#a99fac}
+.links{display:grid;gap:10px;margin-top:15px}.link{display:flex;justify-content:space-between;align-items:center;border:1px solid #33283b;background:#100c14;border-radius:12px;padding:12px 13px;font-weight:700;font-size:13px}.link span{color:#f2a8c7}
+.mcard{max-width:680px;margin:0 auto 44px;background:linear-gradient(180deg,#17111c,#0d0a10);border:1px solid #3c2d45;border-radius:20px;padding:20px}.mcard h2{font-size:28px;margin:0 0 8px}.mcard p{color:#c2b7c7;margin:0 0 16px}.vtag{display:inline-block;margin-bottom:12px;padding:6px 9px;border-radius:999px;background:#201524;border:1px solid #4a3653;color:#f0acc7;font-size:11px;font-weight:800;letter-spacing:.08em}
+.bigbtn{display:block;width:100%;border:0;border-radius:14px;padding:15px 16px;text-align:center;font-weight:900;background:linear-gradient(90deg,#7658f5,#dc4f9e);color:white;margin-bottom:10px}.secbtn{display:block;width:100%;border:1px solid #44334e;border-radius:14px;padding:14px 16px;text-align:center;font-weight:800;background:#15101a;color:white;margin-bottom:10px}
+.mobile-ca{padding:13px;border:1px solid #34283d;background:#100c14;border-radius:12px;margin:14px 0}.mobile-ca small{display:block;color:#9f96a5;margin-bottom:5px}.mobile-ca code{font-size:11px;word-break:break-all}
+footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
+@media(max-width:760px){
+  .wrap{width:min(100% - 18px,1120px)}.hero{padding:28px 0 18px}.hero h1{font-size:46px}.hero p{font-size:15px}.ca{display:none}
+  .grid{display:block;padding:8px 0 22px}.desktop-only{display:none!important}.mobile-only{display:block!important}
+  .proof-desktop{display:none!important}.mcard{margin-bottom:24px;padding:17px}.brand span{font-size:16px}.nav{height:62px}
+}
 </style>
 </head>
 <body>
-<nav><div class="wrap navin"><a class="brand" href="/"><img src="/assets/logo.png" alt="Nene Royal Fans logo"><span>Nene Royal Fans</span></a><div class="navlinks"><a href="/">Home</a><a href="/transparency.html">Transparency</a><a href="https://t.me/NeneRoyalFans" target="_blank" rel="noopener">Telegram</a><a class="cta" href="#swap">Buy NeneTH</a></div></div></nav>
-<div class="wrap">
-<section class="hero"><div class="eyebrow">Solana Mainnet • Community Trading Gateway</div><h1>Buy NeneTH</h1><p class="lead">Swap SOL or another supported Solana token for NeneTH directly on this page. The swap interface is powered by Jupiter and you approve the transaction with your own wallet.</p><div class="ca"><code id="ca">F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5</code><button class="copy" id="copyBtn" type="button">Copy CA</button></div></section>
-<section class="main" id="swap">
-  <div class="card" id="desktopSwapCard">
+<header><div class="wrap nav">
+  <a class="brand" href="/"><img src="/assets/logo.png" alt="NeneTH"><span>Nene Royal Fans</span></a>
+  <a class="buypill" href="/buy.html">Buy NeneTH</a>
+</div></header>
+
+<main class="wrap">
+<section class="hero">
+  <small>SOLANA MAINNET • COMMUNITY TRADING GATEWAY</small>
+  <h1>Buy NeneTH</h1>
+  <p>Desktop swaps run directly on this page through Jupiter. On mobile, Jupiter opens directly with NeneTH preselected for a more reliable wallet experience.</p>
+  <div class="ca"><code>F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5</code><button class="copy" id="copyDesktop">Copy CA</button></div>
+</section>
+
+<section class="grid">
+  <div class="card desktop-only">
     <h2>Swap to NeneTH 👑</h2>
-    <p class="sub">NeneTH is fixed as the receive token. Choose what you want to pay with, enter an amount, review price impact, then approve in your wallet.</p>
+    <p class="sub">NeneTH is fixed as the receive token. Review the quote and price impact before approving in your wallet.</p>
     <div id="jupiter-plugin"></div>
     <div id="plugin-status">Loading Jupiter swap…</div>
-    <div class="warning">NeneTH is newly launched and currently has limited liquidity. Always review price impact and minimum received before confirming.</div>
+    <div class="warn">NeneTH has limited liquidity. Small swaps can move the price significantly. Always review minimum received and price impact.</div>
   </div>
 
-  <div class="card" id="mobileSwapCard" style="display:none">
-    <h2>Buy NeneTH on mobile 📱</h2>
-    <p class="sub">For mobile, use Jupiter directly with NeneTH preselected. This avoids embedded-wallet loading issues.</p>
-
-    <div style="padding:15px;border:1px solid #30283a;border-radius:14px;background:#100d15;margin-bottom:14px">
-      <div style="font-size:12px;color:#aaa3b0;margin-bottom:6px">NeneTH Contract Address</div>
-      <div style="font-family:monospace;font-size:12px;word-break:break-all">F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5</div>
+  <div class="mobile-only">
+    <div class="mcard">
+      <span class="vtag">MOBILE MODE • V7</span>
+      <h2>Buy NeneTH on mobile 📱</h2>
+      <p>Tap the Jupiter button below. It opens Jupiter directly with SOL → NeneTH preselected. This page does not load the embedded wallet plugin on mobile.</p>
+      <div class="mobile-ca"><small>NeneTH Contract Address</small><code>F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5</code></div>
+      <a class="bigbtn" href="https://jup.ag/swap/SOL-F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank" rel="noopener">Open Jupiter — SOL → NeneTH</a>
+      <button class="secbtn" id="copyMobile" type="button">Copy NeneTH CA</button>
+      <a class="secbtn" href="https://www.geckoterminal.com/solana/pools/5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A" target="_blank" rel="noopener">View GeckoTerminal</a>
+      <a class="secbtn" href="/transparency.html">View Transparency</a>
+      <div class="warn">Always confirm the token address and review price impact before swapping.</div>
     </div>
-
-    <a class="btn primary" style="display:block;margin-bottom:10px" href="https://jup.ag/swap/SOL-F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank" rel="noopener">Open Jupiter — SOL → NeneTH</a>
-    <button class="btn" id="copyMobileCa" type="button" style="width:100%;margin-bottom:10px">Copy NeneTH CA</button>
-    <a class="btn" style="display:block;margin-bottom:10px" href="https://www.geckoterminal.com/solana/pools/5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A" target="_blank" rel="noopener">View GeckoTerminal</a>
-    <a class="btn" style="display:block" href="/transparency.html">View Transparency</a>
-
-    <div class="warning" style="margin-top:14px">NeneTH has limited liquidity. Review price impact and minimum received before confirming any swap.</div>
   </div>
 
-  <aside class="card">
+  <aside class="card proof-desktop">
     <h2>Trade with transparency</h2>
     <p class="sub">Public on-chain controls and project proofs are available before you swap.</p>
-
     <div class="trust">
-      <div class="item"><strong>✓ Mint Revoked</strong><span>Mint authority permanently removed.</span></div>
-      <div class="item"><strong>✓ Freeze Revoked</strong><span>Freeze authority permanently removed.</span></div>
-      <div class="item"><strong>✓ Founder Vesting</strong><span>200M NeneTH in Streamflow vesting.</span></div>
-      <div class="item"><strong>✓ LP Lock</strong><span>Raydium LP locked for 365 days.</span></div>
+      <div><b>✓ Mint Revoked</b><span>Mint authority removed.</span></div>
+      <div><b>✓ Freeze Revoked</b><span>Freeze authority removed.</span></div>
+      <div><b>✓ Founder Vesting</b><span>200M NeneTH • Streamflow.</span></div>
+      <div><b>✓ LP Lock</b><span>365 days • StakePoint.</span></div>
     </div>
-
-    <div class="proofs">
-      <a class="proof" href="/transparency.html"><div><strong>Full Transparency</strong><br><span>Allocations, wallets and public proofs</span></div><div class="arrow">→</div></a>
-      <a class="proof" href="https://solscan.io/token/F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank" rel="noopener"><div><strong>Solscan</strong><br><span>Verify the NeneTH mint on-chain</span></div><div class="arrow">→</div></a>
-      <a class="proof" href="https://stakepoint.app/locks/cmtrdumzq0000la0428zyv235" target="_blank" rel="noopener"><div><strong>LP Lock</strong><br><span>StakePoint 365-day lock proof</span></div><div class="arrow">→</div></a>
-    </div>
-
-    <div class="market">
-      <div class="marketbuttons">
-        <a class="btn primary" href="https://jup.ag/" target="_blank" rel="noopener">Open Jupiter</a>
-        <a class="btn" href="https://dexscreener.com/solana/5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A" target="_blank" rel="noopener">DEXScreener</a>
-        <a class="btn" href="https://www.geckoterminal.com/solana/pools/5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A" target="_blank" rel="noopener">GeckoTerminal</a>
-        <a class="btn" href="/transparency.html">Transparency</a>
-      </div>
+    <div class="links">
+      <a class="link" href="/transparency.html">Full Transparency <span>→</span></a>
+      <a class="link" href="https://solscan.io/token/F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank" rel="noopener">Solscan <span>→</span></a>
+      <a class="link" href="https://dexscreener.com/solana/5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A" target="_blank" rel="noopener">DEXScreener <span>→</span></a>
+      <a class="link" href="https://www.geckoterminal.com/solana/pools/5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A" target="_blank" rel="noopener">GeckoTerminal <span>→</span></a>
     </div>
   </aside>
 </section>
-</div>
+</main>
 
-<footer><div class="wrap note">NeneTH is an independent fan-community token created by Nene Royal fans. It is not an official token of Nene Royal, AGT, NBC, or any affiliated organization, and does not represent ownership, endorsement, equity, or a promise of profit.<br><br>Nene Royal Fans • From Thailand to the world 🌎</div></footer>
+<footer><div class="wrap">NeneTH is an independent fan-community token. It is not an official token of Nene Royal, AGT, NBC, or any affiliated organization and does not represent ownership, endorsement, equity, or a promise of profit.</div></footer>
+
 <script>
 (function(){
-  const NENETH = "F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5";
-  const SOL = "So11111111111111111111111111111111111111112";
-  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  const desktopCard = document.getElementById("desktopSwapCard");
-  const mobileCard = document.getElementById("mobileSwapCard");
-  const statusEl = document.getElementById("plugin-status");
+  const NENETH="F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5";
+  const SOL="So11111111111111111111111111111111111111112";
+  const mobile=window.matchMedia("(max-width:760px)").matches;
 
-  function copyCA(button){
-    navigator.clipboard.writeText(NENETH).then(()=>{
-      const old = button.textContent;
-      button.textContent = "Copied ✓";
-      setTimeout(()=>button.textContent=old,1200);
-    }).catch(()=>window.prompt("Copy NeneTH CA:", NENETH));
+  function bindCopy(id){
+    document.getElementById(id)?.addEventListener("click",async function(){
+      try{await navigator.clipboard.writeText(NENETH);const t=this.textContent;this.textContent="Copied ✓";setTimeout(()=>this.textContent=t,1200)}catch(e){window.prompt("Copy NeneTH CA:",NENETH)}
+    });
   }
+  bindCopy("copyDesktop"); bindCopy("copyMobile");
 
-  document.getElementById("copyBtn")?.addEventListener("click", function(){ copyCA(this); });
-  document.getElementById("copyMobileCa")?.addEventListener("click", function(){ copyCA(this); });
+  if(mobile) return;
 
-  if(isMobile){
-    desktopCard.style.display = "none";
-    mobileCard.style.display = "block";
-    return;
-  }
-
-  desktopCard.style.display = "block";
-  mobileCard.style.display = "none";
-
-  let tries = 0;
-  const timer = setInterval(()=>{
-    tries++;
-    if(window.Jupiter && typeof window.Jupiter.init === "function"){
+  const status=document.getElementById("plugin-status");
+  let n=0;
+  const timer=setInterval(()=>{
+    n++;
+    if(window.Jupiter && typeof window.Jupiter.init==="function"){
       clearInterval(timer);
-      try {
+      try{
         window.Jupiter.init({
-          displayMode: "integrated",
-          integratedTargetId: "jupiter-plugin",
-          defaultExplorer: "Solscan",
-          autoConnect: false,
-          localStoragePrefix: "neneth-jupiter-v6",
-          formProps: {
-            swapMode: "ExactIn",
-            initialInputMint: SOL,
-            initialOutputMint: NENETH,
-            fixedMint: NENETH
-          },
-          branding: {
-            name: "NeneTH",
-            logoUri: "https://neneroyalfans.github.io/assets/logo.png"
-          },
-          onSuccess: ({txid})=>{
-            statusEl.textContent = txid ? "Swap submitted successfully: " + txid : "Swap submitted successfully.";
-            statusEl.style.color = "#73e2a7";
-          },
-          onSwapError: ({error})=>{
-            statusEl.textContent = "Swap was not completed. Review the wallet message and try again.";
-            statusEl.style.color = "#f3a1bd";
-            console.error(error);
-          }
+          displayMode:"integrated",
+          integratedTargetId:"jupiter-plugin",
+          defaultExplorer:"Solscan",
+          autoConnect:false,
+          localStoragePrefix:"neneth-jupiter-v7",
+          formProps:{swapMode:"ExactIn",initialInputMint:SOL,initialOutputMint:NENETH,fixedMint:NENETH},
+          branding:{name:"NeneTH",logoUri:"https://neneroyalfans.github.io/assets/logo.png"},
+          onSuccess:({txid})=>{status.textContent=txid?"Swap submitted successfully: "+txid:"Swap submitted successfully.";status.style.color="#72dda4"},
+          onSwapError:({error})=>{status.textContent="Swap was not completed. Review the wallet message and try again.";status.style.color="#f3a1bd";console.error(error)}
         });
-        statusEl.textContent = "Powered by Jupiter • NeneTH receive token is fixed.";
-      } catch(e) {
-        console.error(e);
-        statusEl.innerHTML = 'Jupiter could not initialize. <a href="https://jup.ag/swap/SOL-F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank" rel="noopener">Open Jupiter</a>.';
-      }
-    } else if(tries > 80) {
-      clearInterval(timer);
-      statusEl.innerHTML = 'Jupiter took too long to load. <a href="https://jup.ag/swap/SOL-F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank" rel="noopener">Open Jupiter</a>.';
+        status.textContent="Powered by Jupiter • NeneTH receive token is fixed.";
+      }catch(e){console.error(e);status.innerHTML='Jupiter could not initialize. <a href="https://jup.ag/swap/SOL-F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank">Open Jupiter</a>.'}
+    } else if(n>80) {
+      clearInterval(timer); status.innerHTML='Jupiter took too long to load. <a href="https://jup.ag/swap/SOL-F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank">Open Jupiter</a>.';
     }
   },250);
 })();
