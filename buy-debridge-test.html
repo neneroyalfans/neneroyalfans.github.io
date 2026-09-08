@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#08070c">
 <title>NeneTH deBridge Embedded Test</title>
+<script src="https://app.debridge.com/assets/scripts/widget.js"></script>
 <meta name="description" content="Embedded deBridge same-chain SOL to NeneTH swap test.">
 <style>
 :root{--bg:#08070c;--panel:#141019;--line:#34283d;--text:#fff9fb;--muted:#b8afbc;--pink:#ff6aaa;--gold:#e8ba6f;--green:#72dda4}
@@ -32,7 +33,7 @@ footer{text-align:center;color:#7e7584;font-size:10px;padding:18px 0 34px}
 
 <main class="wrap">
 <section class="hero">
-<small>EMBEDDED SAME-CHAIN SWAP • TEST PAGE</small>
+<small>EMBEDDED SAME-CHAIN SWAP • TEST V12B</small>
 <h1>Buy NeneTH</h1>
 <p>This test embeds deBridge directly inside our website and presets Solana → Solana, native SOL → NeneTH. Stay on this page while connecting a wallet and reviewing the swap.</p>
 </section>
@@ -68,102 +69,93 @@ footer{text-align:center;color:#7e7584;font-size:10px;padding:18px 0 34px}
 <footer><div class="wrap">Independent fan-community token test page. Do not confirm any transaction unless the output token, amount, price impact and wallet details are correct.</div></footer>
 
 <script>
-(function(){
+(async function(){
   const NENETH = "F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5";
-  const SOL_NATIVE = "11111111111111111111111111111111";
+  const SOL_NATIVE = "11111111111111111111111111111111111111111";
   const SOL_CHAIN = 7565164;
   const status = document.getElementById("widgetStatus");
 
-  function loadWidget() {
-    const script = document.createElement("script");
-    script.src = "https://app.debridge.com/assets/scripts/widget.js";
-    script.async = true;
+  const watchdog = setTimeout(() => {
+    if (!document.querySelector("#debridgeWidget iframe")) {
+      status.innerHTML = '<span style="color:#ff8295">deBridge did not render within 8 seconds.</span> Open browser DevTools → Console and send me the first red error.';
+    }
+  }, 8000);
 
-    script.onload = async () => {
+  try {
+    if (!window.deBridge || typeof window.deBridge.widget !== "function") {
+      throw new Error("deBridge widget.js loaded but window.deBridge.widget is unavailable.");
+    }
+
+    const width = Math.max(300, Math.min(560, window.innerWidth - 34));
+
+    const widget = await window.deBridge.widget({
+      "v": "1",
+      "element": "debridgeWidget",
+      "title": "Buy NeneTH",
+      "description": "SOL → NeneTH on Solana",
+      "width": width,
+      "height": 760,
+      "supportedChains": {
+        "inputChains": { "7565164": "all" },
+        "outputChains": { "7565164": "all" }
+      },
+      "inputChain": 7565164,
+      "outputChain": 7565164,
+      "inputCurrency": SOL_NATIVE,
+      "outputCurrency": NENETH,
+      "address": "",
+      "amount": "",
+      "outputAmount": "",
+      "showSwapTransfer": true,
+      "isAmountFromNotModifiable": false,
+      "isAmountToNotModifiable": false,
+      "lang": "en",
+      "mode": "deswap",
+      "isEnableCalldata": false,
+      "styles": "eyJhcHBCYWNrZ3JvdW5kIjoiIzBiMDkxMCIsImFwcEFjY2VudEJnIjoiIzE3MTIxYyIsImNoYXJ0QmciOiIjMGIwOTEwIiwicHJpbWFyeSI6IiNmZjZhYWEiLCJzZWNvbmRhcnkiOiIjZThiYTZmIiwiYmFkZ2UiOiIjNzJkZGE0IiwiYm9yZGVyQ29sb3IiOiIjMzQyODNkIiwiYm9yZGVyUmFkaXVzIjoxNiwiZm9udENvbG9yIjoiI2ZmZjlmYiIsImZvbnRDb2xvckFjY2VudCI6IiNmN2E5YzgiLCJmb250RmFtaWx5IjoiSW50ZXIifQ==",
+      "theme": "dark",
+      "isHideLogo": false,
+      "logo": "",
+      "disabledWallets": [],
+      "disabledElements": []
+    });
+
+    clearTimeout(watchdog);
+    status.innerHTML = '<span class="ok">deBridge widget initialized.</span> Confirm that SOL and NeneTH are preselected before connecting.';
+
+    const phantom = window.phantom?.solana || (window.solana?.isPhantom ? window.solana : null);
+    const bitget = window.bitkeep?.solana || null;
+
+    if (phantom && widget?.setExternalSolanaWallet) {
       try {
-        if (!window.deBridge?.widget) throw new Error("deBridge widget API not found after script load.");
-
-        const width = Math.max(300, Math.min(560, window.innerWidth - 34));
-
-        const widget = await window.deBridge.widget({
-          element: "debridgeWidget",
-          v: "1",
-          mode: "deswap",
-          title: "Buy NeneTH",
-          description: "SOL → NeneTH on Solana",
-          width: width,
-          height: 760,
-          inputChain: SOL_CHAIN,
-          outputChain: SOL_CHAIN,
-          inputCurrency: SOL_NATIVE,
-          outputCurrency: NENETH,
-          address: "",
-          amount: "",
-          lang: "en",
-          theme: "dark",
-          styles: "eyJhcHBCYWNrZ3JvdW5kIjoiIzBiMDkxMCIsImFwcEFjY2VudEJnIjoiIzE3MTIxYyIsImNoYXJ0QmciOiIjMGIwOTEwIiwicHJpbWFyeSI6IiNmZjZhYWEiLCJzZWNvbmRhcnkiOiIjZThiYTZmIiwiYmFkZ2UiOiIjNzJkZGE0IiwiYm9yZGVyQ29sb3IiOiIjMzQyODNkIiwiYm9yZGVyUmFkaXVzIjoxNiwiZm9udENvbG9yIjoiI2ZmZjlmYiIsImZvbnRDb2xvckFjY2VudCI6IiNmN2E5YzgiLCJmb250RmFtaWx5IjoiSW50ZXIifQ==",
-          showSwapTransfer: true,
-          isAmountFromNotModifiable: false,
-          isAmountToNotModifiable: false,
-          isEnableCalldata: false,
-          isHideLogo: false,
-          disabledWallets: [],
-          disabledElements: [],
-          supportedChains: {
-            inputChains: { "7565164": "all" },
-            outputChains: { "7565164": "all" }
-          }
+        widget.setExternalSolanaWallet({
+          provider: phantom,
+          name: "Phantom",
+          imageSrc: "https://app.debridge.com/assets/images/dln-details/wallet/phenom.svg"
         });
-
-        status.innerHTML = '<span class="ok">deBridge widget loaded.</span> Check that SOL and NeneTH are preselected before connecting.';
-
-        // If this page is inside a wallet browser/extension environment,
-        // expose that Solana wallet to the embedded widget.
-        const phantom = window.phantom?.solana || (window.solana?.isPhantom ? window.solana : null);
-        const bitget = window.bitkeep?.solana || null;
-
-        if (phantom && widget?.setExternalSolanaWallet) {
-          try {
-            widget.setExternalSolanaWallet({
-              provider: phantom,
-              name: "Phantom",
-              imageSrc: "https://app.debridge.com/assets/images/dln-details/wallet/phenom.svg"
-            });
-            status.innerHTML += ' <span class="ok">Phantom provider detected.</span>';
-          } catch(e) { console.warn("External Phantom setup:", e); }
-        } else if (bitget && widget?.setExternalSolanaWallet) {
-          try {
-            widget.setExternalSolanaWallet({
-              provider: bitget,
-              name: "Bitget Wallet",
-              imageSrc: ""
-            });
-            status.innerHTML += ' <span class="ok">Bitget provider detected.</span>';
-          } catch(e) { console.warn("External Bitget setup:", e); }
-        }
-
-        widget?.on?.("singleChainSwap", (w, params) => {
-          console.log("deBridge singleChainSwap", params);
-          status.innerHTML = '<span class="ok">Swap event received from deBridge.</span> Review wallet/transaction status.';
+        status.innerHTML += ' <span class="ok">Phantom detected.</span>';
+      } catch(e) { console.warn("Phantom provider setup:", e); }
+    } else if (bitget && widget?.setExternalSolanaWallet) {
+      try {
+        widget.setExternalSolanaWallet({
+          provider: bitget,
+          name: "Bitget Wallet",
+          imageSrc: ""
         });
+        status.innerHTML += ' <span class="ok">Bitget detected.</span>';
+      } catch(e) { console.warn("Bitget provider setup:", e); }
+    }
 
-        widget?.on?.("outputTokenChanged", (w, params) => {
-          console.log("Output token changed", params);
-        });
+    widget?.on?.("singleChainSwap", (w, params) => {
+      console.log("deBridge singleChainSwap", params);
+      status.innerHTML = '<span class="ok">Single-chain swap event received.</span>';
+    });
 
-      } catch (e) {
-        console.error(e);
-        status.textContent = "Widget error: " + (e?.message || e);
-      }
-    };
-
-    script.onerror = () => {
-      status.textContent = "Could not load deBridge widget script.";
-    };
-    document.head.appendChild(script);
+  } catch (e) {
+    clearTimeout(watchdog);
+    console.error("deBridge init error:", e);
+    status.innerHTML = '<span style="color:#ff8295">Widget error:</span> ' + (e?.message || String(e));
   }
-
-  loadWidget();
 })();
 </script>
 </body>
