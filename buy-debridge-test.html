@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08070c">
+<title>NeneTH deBridge Embedded Test</title>
+<meta name="description" content="Embedded deBridge same-chain SOL to NeneTH swap test.">
+<style>
+:root{--bg:#08070c;--panel:#141019;--line:#34283d;--text:#fff9fb;--muted:#b8afbc;--pink:#ff6aaa;--gold:#e8ba6f;--green:#72dda4}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+body{min-height:100vh;background:radial-gradient(circle at 15% 10%,rgba(122,89,255,.16),transparent 32%),radial-gradient(circle at 85% 15%,rgba(255,100,170,.14),transparent 28%),#08070c}
+a{color:inherit;text-decoration:none}.wrap{width:min(1080px,calc(100% - 24px));margin:auto}
+header{position:sticky;top:0;z-index:20;background:rgba(8,7,12,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)}.nav{min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:10px}.brand{display:flex;gap:10px;align-items:center;font-weight:850}.brand img{width:40px;height:40px;border-radius:50%}.navlinks{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.navlinks a{padding:8px 11px;border:1px solid #3b2d43;border-radius:10px;background:#120e16;font-size:12px;font-weight:800}.navlinks .active{background:linear-gradient(90deg,#e3a367,#ff70ae);color:#170b11;border:0}
+.hero{padding:36px 0 18px;text-align:center}.hero small{color:var(--gold);letter-spacing:.14em;font-weight:800}.hero h1{font:700 clamp(44px,8vw,76px)/1 Georgia,serif;margin:8px 0 11px;background:linear-gradient(90deg,#ffe4b3,#efbd74,#f7a9c8);-webkit-background-clip:text;color:transparent}.hero p{max-width:730px;margin:auto;color:#c7bdca}
+.grid{display:grid;grid-template-columns:minmax(0,600px) minmax(280px,1fr);justify-content:center;gap:18px;padding:16px 0 40px;align-items:start}.card{background:linear-gradient(180deg,#17121c,#0d0a10);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 22px 60px rgba(0,0,0,.34)}.card h2{margin:0 0 6px;font-size:24px}.sub{margin:0 0 14px;color:var(--muted);font-size:13px}
+#widgetShell{width:100%;min-height:760px;display:flex;justify-content:center;align-items:flex-start;overflow:hidden;border-radius:16px;background:#09070d}
+#debridgeWidget{max-width:100%}
+.status{margin-top:10px;padding:10px 11px;border:1px solid #302638;border-radius:11px;background:#0e0b12;color:#aaa2ad;font-size:11px;word-break:break-word}.ok{color:var(--green)}.warn{margin-top:12px;padding:11px 12px;border:1px solid rgba(232,186,111,.35);background:rgba(232,186,111,.07);color:#ead7b5;border-radius:11px;font-size:11px}
+.proofs{display:grid;gap:9px}.proof{display:flex;justify-content:space-between;align-items:center;border:1px solid #33283c;background:#100c14;border-radius:11px;padding:11px;font-size:12px}.proof span{color:#f0a7c6}.ca{font-family:monospace;font-size:11px;word-break:break-all;padding:11px;background:#0f0c13;border:1px solid #30263a;border-radius:11px;margin-bottom:13px}
+.badges{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}.badge{padding:10px;border:1px solid #30263a;border-radius:10px;background:#0f0c13}.badge b{display:block;color:var(--green);font-size:11px}.badge small{color:#948c9a}
+footer{text-align:center;color:#7e7584;font-size:10px;padding:18px 0 34px}
+@media(max-width:820px){.grid{grid-template-columns:1fr}.proof-side{order:2}#widgetShell{min-height:800px}.nav{padding:8px 0;align-items:flex-start}.navlinks{gap:5px}.navlinks a{font-size:10px;padding:7px 8px}}
+@media(max-width:520px){.wrap{width:min(100% - 12px,1080px)}.hero{padding:24px 0 10px}.hero h1{font-size:44px}.card{padding:10px;border-radius:16px}#widgetShell{min-height:820px}.brand span{font-size:14px}}
+</style>
+</head>
+<body>
+<header><div class="wrap nav">
+<a class="brand" href="/"><img src="/assets/logo.png" alt="NeneTH"><span>Nene Royal Fans</span></a>
+<div class="navlinks"><a href="/">Home</a><a href="/transparency.html">Transparency</a><a class="active" href="#">deBridge Test</a></div>
+</div></header>
+
+<main class="wrap">
+<section class="hero">
+<small>EMBEDDED SAME-CHAIN SWAP • TEST PAGE</small>
+<h1>Buy NeneTH</h1>
+<p>This test embeds deBridge directly inside our website and presets Solana → Solana, native SOL → NeneTH. Stay on this page while connecting a wallet and reviewing the swap.</p>
+</section>
+
+<section class="grid">
+<div class="card">
+<h2>Embedded SOL → NeneTH 👑</h2>
+<p class="sub">The widget is loaded from deBridge and remains inside this Nene Royal Fans page.</p>
+<div id="widgetShell"><div id="debridgeWidget"></div></div>
+<div class="status" id="widgetStatus">Loading deBridge widget…</div>
+<div class="warn">TEST ONLY: do not use a large amount. First confirm that the widget recognizes NeneTH, produces a reasonable quote, and shows the correct wallet transaction.</div>
+</div>
+
+<aside class="card proof-side">
+<h2>Verify before testing</h2>
+<p class="sub">NeneTH output mint must remain exactly this address:</p>
+<div class="ca">F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5</div>
+<div class="badges">
+<div class="badge"><b>✓ Solana</b><small>Chain ID 7565164</small></div>
+<div class="badge"><b>✓ Native SOL</b><small>Input preset</small></div>
+<div class="badge"><b>✓ NeneTH</b><small>Output preset</small></div>
+<div class="badge"><b>✓ Embedded</b><small>No DEX page handoff intended</small></div>
+</div>
+<div class="proofs">
+<a class="proof" href="/transparency.html">Full Transparency <span>→</span></a>
+<a class="proof" href="https://solscan.io/token/F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank" rel="noopener">Solscan <span>→</span></a>
+<a class="proof" href="https://dexscreener.com/solana/5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A" target="_blank" rel="noopener">DEXScreener <span>→</span></a>
+</div>
+</aside>
+</section>
+</main>
+
+<footer><div class="wrap">Independent fan-community token test page. Do not confirm any transaction unless the output token, amount, price impact and wallet details are correct.</div></footer>
+
+<script>
+(function(){
+  const NENETH = "F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5";
+  const SOL_NATIVE = "11111111111111111111111111111111";
+  const SOL_CHAIN = 7565164;
+  const status = document.getElementById("widgetStatus");
+
+  function loadWidget() {
+    const script = document.createElement("script");
+    script.src = "https://app.debridge.com/assets/scripts/widget.js";
+    script.async = true;
+
+    script.onload = async () => {
+      try {
+        if (!window.deBridge?.widget) throw new Error("deBridge widget API not found after script load.");
+
+        const width = Math.max(300, Math.min(560, window.innerWidth - 34));
+
+        const widget = await window.deBridge.widget({
+          element: "debridgeWidget",
+          v: "1",
+          mode: "deswap",
+          title: "Buy NeneTH",
+          description: "SOL → NeneTH on Solana",
+          width: width,
+          height: 760,
+          inputChain: SOL_CHAIN,
+          outputChain: SOL_CHAIN,
+          inputCurrency: SOL_NATIVE,
+          outputCurrency: NENETH,
+          address: "",
+          amount: "",
+          lang: "en",
+          theme: "dark",
+          styles: "eyJhcHBCYWNrZ3JvdW5kIjoiIzBiMDkxMCIsImFwcEFjY2VudEJnIjoiIzE3MTIxYyIsImNoYXJ0QmciOiIjMGIwOTEwIiwicHJpbWFyeSI6IiNmZjZhYWEiLCJzZWNvbmRhcnkiOiIjZThiYTZmIiwiYmFkZ2UiOiIjNzJkZGE0IiwiYm9yZGVyQ29sb3IiOiIjMzQyODNkIiwiYm9yZGVyUmFkaXVzIjoxNiwiZm9udENvbG9yIjoiI2ZmZjlmYiIsImZvbnRDb2xvckFjY2VudCI6IiNmN2E5YzgiLCJmb250RmFtaWx5IjoiSW50ZXIifQ==",
+          showSwapTransfer: true,
+          isAmountFromNotModifiable: false,
+          isAmountToNotModifiable: false,
+          isEnableCalldata: false,
+          isHideLogo: false,
+          disabledWallets: [],
+          disabledElements: [],
+          supportedChains: {
+            inputChains: { "7565164": "all" },
+            outputChains: { "7565164": "all" }
+          }
+        });
+
+        status.innerHTML = '<span class="ok">deBridge widget loaded.</span> Check that SOL and NeneTH are preselected before connecting.';
+
+        // If this page is inside a wallet browser/extension environment,
+        // expose that Solana wallet to the embedded widget.
+        const phantom = window.phantom?.solana || (window.solana?.isPhantom ? window.solana : null);
+        const bitget = window.bitkeep?.solana || null;
+
+        if (phantom && widget?.setExternalSolanaWallet) {
+          try {
+            widget.setExternalSolanaWallet({
+              provider: phantom,
+              name: "Phantom",
+              imageSrc: "https://app.debridge.com/assets/images/dln-details/wallet/phenom.svg"
+            });
+            status.innerHTML += ' <span class="ok">Phantom provider detected.</span>';
+          } catch(e) { console.warn("External Phantom setup:", e); }
+        } else if (bitget && widget?.setExternalSolanaWallet) {
+          try {
+            widget.setExternalSolanaWallet({
+              provider: bitget,
+              name: "Bitget Wallet",
+              imageSrc: ""
+            });
+            status.innerHTML += ' <span class="ok">Bitget provider detected.</span>';
+          } catch(e) { console.warn("External Bitget setup:", e); }
+        }
+
+        widget?.on?.("singleChainSwap", (w, params) => {
+          console.log("deBridge singleChainSwap", params);
+          status.innerHTML = '<span class="ok">Swap event received from deBridge.</span> Review wallet/transaction status.';
+        });
+
+        widget?.on?.("outputTokenChanged", (w, params) => {
+          console.log("Output token changed", params);
+        });
+
+      } catch (e) {
+        console.error(e);
+        status.textContent = "Widget error: " + (e?.message || e);
+      }
+    };
+
+    script.onerror = () => {
+      status.textContent = "Could not load deBridge widget script.";
+    };
+    document.head.appendChild(script);
+  }
+
+  loadWidget();
+})();
+</script>
+</body>
+</html>
