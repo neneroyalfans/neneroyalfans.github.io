@@ -138,12 +138,13 @@
     <section class="hero">
       <div class="eyebrow">Nene Royal Fans • Solana Mainnet</div>
       <h1>NeneTH Transparency</h1>
-      <p class="sub">Public on-chain information for the independent NeneTH fan-community token project, including supply controls, allocation wallets, founder vesting, Raydium liquidity, and LP lock proof.</p>
+      <p class="sub">Public on-chain information for the independent NeneTH fan-community token project, including supply controls, allocation wallets, founder vesting, Raydium liquidity, LP lock proof, and current verification status.</p>
       <div class="badge-row">
         <span class="badge ok">✓ Mint Authority Revoked</span>
         <span class="badge ok">✓ Freeze Authority Revoked</span>
         <span class="badge ok">✓ Founder Vesting Active</span>
         <span class="badge ok">✓ LP Locked 365 Days</span>
+        <span class="badge">Jupiter VRFD: Pending Review</span>
       </div>
     </section>
 
@@ -174,12 +175,15 @@
       </section>
 
       <section class="card span-12">
-        <div class="title">Token Allocation</div>
+        <div class="title">Token Allocation Plan</div>
         <div class="alloc">
-          <div class="mini founder"><div>Founder</div><div class="pct">20%</div><div class="muted">200,000,000</div></div>
-          <div class="mini treasury"><div>Treasury</div><div class="pct">50%</div><div class="muted">500,000,000</div></div>
+          <div class="mini founder"><div>Founder</div><div class="pct">20%</div><div class="muted">200,000,000 vested</div></div>
+          <div class="mini treasury"><div>Treasury</div><div class="pct">50%</div><div class="muted">500,000,000 allocation</div></div>
           <div class="mini community"><div>Community</div><div class="pct">20%</div><div class="muted">200,000,000</div></div>
-          <div class="mini liquidity"><div>Liquidity</div><div class="pct">10%</div><div class="muted">100,000,000</div></div>
+          <div class="mini liquidity"><div>Liquidity</div><div class="pct">10%</div><div class="muted">100,000,000 deployed to LP</div></div>
+        </div>
+        <div class="warning" style="margin-top:16px">
+          Treasury transparency note: 380,000 NeneTH was used as the Streamflow token fee to create the Founder vesting contract for the full 200,000,000 NeneTH allocation. The Treasury allocation remains 50% by policy, while the current Treasury token balance is reduced by this documented project expense.
         </div>
       </section>
 
@@ -227,8 +231,34 @@
       </section>
 
       <section class="card span-12">
+        <div class="title">Treasury & Community Policy</div>
+        <div class="rows">
+          <div class="row"><div class="label">Treasury Purpose</div><div class="value">Project operations, infrastructure, verification, community development, and documented ecosystem expenses.</div></div>
+          <div class="row"><div class="label">Community Allocation Purpose</div><div class="value">Community activities, participation programs, future incentives, and fan-community initiatives.</div></div>
+          <div class="row"><div class="label">Market Conduct</div><div class="value">Treasury and community allocations are not intended for artificial trading volume, wash trading, or artificial price support.</div></div>
+          <div class="row"><div class="label">Disclosure Principle</div><div class="value">Material uses of large allocations should be documented publicly through official Nene Royal Fans channels and this transparency page.</div></div>
+        </div>
+      </section>
+
+      <section class="card span-12">
+        <div class="title">Current Verification & Market Status</div>
+        <div class="rows">
+          <div class="row"><div class="label">Jupiter VRFD</div><div class="value" style="color:var(--gold)">Pending • Standard Review</div></div>
+          <div class="row"><div class="label">Raydium</div><div class="value" style="color:var(--green)">CPMM Pool Live</div></div>
+          <div class="row"><div class="label">DEXScreener</div><div class="value" style="color:var(--green)">Pair Indexed</div></div>
+          <div class="row"><div class="label">CoinMarketCap DexScan</div><div class="value" style="color:var(--green)">Market Data Indexed</div></div>
+          <div class="row"><div class="label">CoinMarketCap Full Verification</div><div class="value">Not yet completed</div></div>
+          <div class="row"><div class="label">GeckoTerminal / CoinGecko</div><div class="value">Planned next verification step</div></div>
+        </div>
+      </section>
+
+      <section class="card span-12">
         <div class="title">Public Proofs</div>
         <div class="proofs">
+          <div class="proof">
+            <div><strong>Jupiter VRFD Submission</strong><div class="muted">NeneTH verification submitted on 7 Sep 2026 • Standard review • status pending</div></div>
+            <a href="https://verified.jup.ag/" target="_blank" rel="noopener">Open VRFD</a>
+          </div>
           <div class="proof">
             <div><strong>Solana Mint</strong><div class="muted mono">F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5</div></div>
             <a href="https://solscan.io/token/F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank" rel="noopener">View on Solscan</a>
@@ -269,7 +299,7 @@
 
     <footer>
       Nene Royal Fans • From Thailand to the world 🌎<br>
-      Public proofs are provided for transparency and independent verification.
+      Public proofs are provided for transparency and independent verification.<br>Last updated: 8 Sep 2026
     </footer>
   </div>
 
