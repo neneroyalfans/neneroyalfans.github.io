@@ -29,6 +29,47 @@ header{position:sticky;top:0;z-index:10;background:rgba(8,7,12,.94);border-botto
 footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
 .mayan-shell{min-height:660px;border-radius:16px;overflow:hidden;background:#09070d}
 #WIDGET_ROOT{min-height:660px}
+
+    .mobile-wallet-handoff{
+      display:none;
+      margin:0 0 12px;
+      padding:14px;
+      border:1px solid #3b2d45;
+      border-radius:14px;
+      background:linear-gradient(135deg,rgba(117,88,242,.10),rgba(218,79,157,.08));
+    }
+    .mobile-wallet-handoff h3{margin:0 0 6px;font-size:17px}
+    .mobile-wallet-handoff p{margin:0 0 10px;color:#b9afbe;font-size:11px}
+    .mobile-wallet-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .mobile-wallet-actions a,.mobile-wallet-actions button{
+      display:block;text-align:center;padding:11px 10px;border-radius:11px;
+      border:1px solid #46364f;background:#15101a;color:#fff;font-weight:800;font-size:12px
+    }
+    .mobile-wallet-actions a.primary,.mobile-wallet-actions button.primary{background:linear-gradient(90deg,#7358ed,#cf4f9c);border:0}
+    .mobile-env-ok{
+      display:none;margin:0 0 10px;padding:10px 11px;border:1px solid rgba(114,223,165,.30);
+      border-radius:11px;background:rgba(114,223,165,.06);color:#aeecc9;font-size:11px
+    }
+    
+    .mobile-external-browser #phantomConnect,
+    .mobile-external-browser #bitgetConnect{
+      display:none!important;
+    }
+
+
+    #raySwapBtn{
+      min-height:58px;
+      padding:16px 18px;
+      font-size:17px;
+      font-weight:900;
+      border-radius:14px;
+    }
+
+@media(max-width:760px){
+      .mobile-wallet-handoff{display:block}
+      .mobile-wallet-actions{grid-template-columns:1fr}
+    }
+
 @media(max-width:760px){.mayan-shell,#WIDGET_ROOT{min-height:720px}
 .nav{height:auto;min-height:62px;padding:8px 0;align-items:flex-start}.navlinks{gap:6px}.navlinks a{font-size:10px;padding:7px 8px}.brand span{font-size:14px}
   .wrap{width:min(100% - 18px,1120px)}.hero{padding:28px 0 18px}.hero h1{font-size:46px}.hero p{font-size:15px}.ca{display:none}
@@ -36,6 +77,11 @@ footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
   .proof-desktop{display:none!important}.mcard{margin-bottom:24px;padding:17px}.brand span{font-size:16px}.nav{height:62px}
 }
 </style>
+
+<style>
+  #rayQuoteBtn { display:none !important; }
+</style>
+
 </head>
 <body>
 <header><div class="wrap nav">
@@ -63,6 +109,18 @@ footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
   <div class="card">
     <h2>Swap to NeneTH 👑</h2>
     <p class="sub">Buy NeneTH directly from our Raydium CPMM liquidity pool. Pay with USDC, review the live pool quote, then approve the swap in your wallet without leaving this page.</p>
+
+    <div class="mobile-wallet-handoff" id="mobileWalletHandoff">
+      <h3>📱 Buy NeneTH on mobile</h3>
+      <p>For the easiest mobile experience, open this same Nene Royal Fans buy page inside Bitget Wallet, then connect and buy with USDC.</p>
+      <div class="mobile-wallet-actions">
+        <button class="primary" id="openBitgetMobile" type="button">Buy with Bitget Wallet</button>
+      </div>
+      <div style="margin-top:9px;color:#92899a;font-size:10px">
+        Phantom mobile users can still open this page manually inside Phantom's in-app browser.
+      </div>
+    </div>
+    <div class="mobile-env-ok" id="mobileEnvOk">✓ Wallet browser detected. Connect below and buy NeneTH without leaving this page.</div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px">
       <button class="btn" id="phantomConnect" type="button">Connect Phantom</button>
@@ -107,7 +165,11 @@ footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
       </div>
     </div>
 
-    <button class="btn" id="rayQuoteBtn" type="button" style="width:100%;margin-bottom:8px">Read Pool & Refresh Quote</button>
+    
+    <div id="priceImpactWarning" style="display:none;margin-top:8px;padding:10px 12px;border:1px solid rgba(255,193,7,.35);border-radius:10px;font-size:11px;">
+      High price impact. You may receive less NeneTH than expected.
+    </div>
+<button class="btn" id="rayQuoteBtn" type="button" style="display:none!important;width:100%;margin-bottom:8px">Read Pool & Refresh Quote</button>
     <button class="btn primary" id="raySwapBtn" type="button" style="width:100%" disabled>Connect Wallet</button>
 
     <div id="rayStatus" style="margin-top:10px;padding:10px 11px;border:1px solid #302638;border-radius:11px;background:#0e0b12;color:#aaa2ad;font-size:11px;word-break:break-word">
@@ -136,15 +198,22 @@ footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
 </section>
 </main>
 
-<footer><div class="wrap">NeneTH is an independent fan-community token. It is not an official token of Nene Royal, AGT, NBC, or any affiliated organization and does not represent ownership, endorsement, equity, or a promise of profit.<br><br><span style="opacity:.55">Buy page: Production V17</span></div></footer>
+<footer><div class="wrap">NeneTH is an independent fan-community token. It is not an official token of Nene Royal, AGT, NBC, or any affiliated organization and does not represent ownership, endorsement, equity, or a promise of profit.<br><br><span style="opacity:.55">Buy page: Production V24 No ReadPool</span></div></footer>
 
 <script type="module">
+
+function updatePriceImpactWarning(pct){
+  const el = document.getElementById("priceImpactWarning");
+  if (!el) return;
+  el.style.display = Number(pct) > 5 ? "block" : "none";
+}
+
 const POOL_ID = "5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A";
 const USDC = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
 const NENETH = "F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5";
 const USDC_DECIMALS = 6;
 const NENETH_DECIMALS = 9;
-const MAX_PRICE_IMPACT_PCT = 5;
+const MAX_PRICE_IMPACT_PCT = 10;
 const RPC_URL = "https://mainnet.helius-rpc.com/?api-key=46fb09f0-d546-41c0-8f3c-d27e4f650f14";
 
 const $ = (id) => document.getElementById(id);
@@ -155,6 +224,36 @@ const minimumEl = $("rayMinimum");
 const walletState = $("walletState");
 const statusEl = $("rayStatus");
 const swapBtn = $("raySwapBtn");
+
+const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+const phantomInjected = !!(window.phantom?.solana?.isPhantom || window.solana?.isPhantom);
+const bitgetInjected = !!window.bitkeep?.solana;
+
+const currentBuyUrl = window.location.href.split("#")[0];
+
+function openInBitget() {
+  const deeplink =
+    "https://bkcode.vip?action=dapp&url=" +
+    encodeURIComponent(currentBuyUrl);
+  window.location.href = deeplink;
+}
+
+document.getElementById("openBitgetMobile")?.addEventListener("click", openInBitget);
+
+if (isMobile) {
+  const handoff = document.getElementById("mobileWalletHandoff");
+  const ok = document.getElementById("mobileEnvOk");
+
+  if (phantomInjected || bitgetInjected) {
+    if (handoff) handoff.style.display = "none";
+    if (ok) ok.style.display = "block";
+    document.body.classList.remove("mobile-external-browser");
+  } else {
+    document.body.classList.add("mobile-external-browser");
+    if (handoff) handoff.style.display = "block";
+    if (ok) ok.style.display = "none";
+  }
+}
 
 let provider = null;
 let walletType = "";
