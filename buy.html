@@ -82,6 +82,11 @@ footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
   #rayQuoteBtn { display:none !important; }
 </style>
 
+
+<style>
+  #priceImpact{display:none!important;}
+  .price-impact-ui-hidden{display:none!important;}
+</style>
 </head>
 <body>
 <header><div class="wrap nav">
@@ -101,7 +106,7 @@ footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
 <section class="hero">
   <small>SOLANA MAINNET • COMMUNITY TRADING GATEWAY</small>
   <h1>Buy NeneTH</h1>
-  <p>Desktop swaps run directly on this page through Jupiter. On mobile, Jupiter opens directly with NeneTH preselected for a more reliable wallet experience.</p>
+  <p>Buy NeneTH directly from the NeneTH/USDC Raydium liquidity pool. Connect a supported Solana wallet, review the live quote, and approve the swap without leaving this page.</p>
   <div class="ca"><code>F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5</code><button class="copy" id="copyDesktop">Copy CA</button></div>
 </section>
 
@@ -155,7 +160,7 @@ footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
     </div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
-      <div style="padding:9px;border:1px solid #302638;background:#0e0b12;border-radius:10px">
+      <div style="display:none!important;padding:9px;border:1px solid #302638;background:#0e0b12;border-radius:10px" class="price-impact-ui-hidden">
         <span style="display:block;color:#958d9a;font-size:9px">Price impact</span>
         <b id="rayImpact" style="font-size:12px">—</b>
       </div>
@@ -176,7 +181,7 @@ footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
       Waiting for Raydium quote.
     </div>
 
-    <div class="warn">USDC is required for direct purchase. Always review the live quote, minimum received, price impact, and wallet transaction details before confirming.</div>
+    <div class="warn">USDC is required for direct purchase. Always review the live quote, minimum received, and wallet transaction details before confirming.</div>
   </div>
 
   <aside class="card proof-desktop">
@@ -198,7 +203,7 @@ footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
 </section>
 </main>
 
-<footer><div class="wrap">NeneTH is an independent fan-community token. It is not an official token of Nene Royal, AGT, NBC, or any affiliated organization and does not represent ownership, endorsement, equity, or a promise of profit.<br><br><span style="opacity:.55">Buy page: Production V24 No ReadPool</span></div></footer>
+<footer><div class="wrap">NeneTH is an independent fan-community token. It is not an official token of Nene Royal, AGT, NBC, or any affiliated organization and does not represent ownership, endorsement, equity, or a promise of profit.<br><br><span style="opacity:.55">Buy page: Production V25 Clean Buy</span></div></footer>
 
 <script type="module">
 
