@@ -17,17 +17,119 @@
 <div class="wrap">
 <section class="hero"><div class="eyebrow">Solana Mainnet • Community Trading Gateway</div><h1>Buy NeneTH</h1><p class="lead">Swap SOL or another supported Solana token for NeneTH directly on this page. The swap interface is powered by Jupiter and you approve the transaction with your own wallet.</p><div class="ca"><code id="ca">F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5</code><button class="copy" id="copyBtn" type="button">Copy CA</button></div></section>
 <section class="main" id="swap">
-<div class="card"><h2>Swap to NeneTH 👑</h2><p class="sub">NeneTH is fixed as the receive token. Choose what you want to pay with, enter an amount, review price impact, then approve in your wallet.</p><div id="jupiter-plugin"></div><div id="plugin-status">Loading Jupiter swap…</div><div class="warning">NeneTH is newly launched and currently has limited liquidity. Small pools can have high price impact and slippage. Always review the quote, minimum received, network, and wallet transaction details before confirming.</div></div>
+<div class="card"><h2>Swap to NeneTH 👑</h2><p class="sub">NeneTH is fixed as the receive token. Choose what you want to pay with, enter an amount, review price impact, then approve in your wallet.</p><div class="env-ok" id="envOk">✓ Phantom mobile browser detected — wallet connection is available below.</div>
+      <div id="jupiter-plugin"></div><div id="plugin-status">Loading Jupiter swap…</div><div class="warning">NeneTH is newly launched and currently has limited liquidity. Small pools can have high price impact and slippage. Always review the quote, minimum received, network, and wallet transaction details before confirming.</div></div>
 <aside class="card"><h2>Trade with transparency</h2><p class="sub">Public on-chain controls and project proofs are available before you swap.</p><div class="trust"><div class="item"><strong>✓ Mint Revoked</strong><span>Mint authority permanently removed.</span></div><div class="item"><strong>✓ Freeze Revoked</strong><span>Freeze authority permanently removed.</span></div><div class="item"><strong>✓ Founder Vesting</strong><span>200M NeneTH in Streamflow vesting.</span></div><div class="item"><strong>✓ LP Lock</strong><span>Raydium LP locked for 365 days.</span></div></div><div class="proofs"><a class="proof" href="/transparency.html"><div><strong>Full Transparency</strong><br><span>Allocations, wallets and public proofs</span></div><div class="arrow">→</div></a><a class="proof" href="https://solscan.io/token/F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank" rel="noopener"><div><strong>Solscan</strong><br><span>Verify the NeneTH mint on-chain</span></div><div class="arrow">→</div></a><a class="proof" href="https://app.streamflow.finance/contract/solana/mainnet/4tfcg6RNAecsF5jPHtUdTabbi1XNLQa5yxJLfZJ626Lw" target="_blank" rel="noopener"><div><strong>Founder Vesting</strong><br><span>Streamflow public vesting contract</span></div><div class="arrow">→</div></a><a class="proof" href="https://stakepoint.app/locks/cmtrdumzq0000la0428zyv235" target="_blank" rel="noopener"><div><strong>LP Lock</strong><br><span>StakePoint 365-day lock proof</span></div><div class="arrow">→</div></a></div><div class="market"><div class="marketbuttons"><a class="btn primary" href="https://jup.ag/" target="_blank" rel="noopener">Open Jupiter</a><a class="btn" href="https://dexscreener.com/solana/5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A" target="_blank" rel="noopener">DEXScreener</a></div></div></aside>
 </section></div>
 <footer><div class="wrap note">NeneTH is an independent fan-community token created by Nene Royal fans. It is not an official token of Nene Royal, AGT, NBC, or any affiliated organization, and does not represent ownership, endorsement, equity, or a promise of profit.<br><br>Nene Royal Fans • From Thailand to the world 🌎</div></footer>
 <script>
 (function(){
-const NENETH="F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5";
-const SOL="So11111111111111111111111111111111111111112";
-const statusEl=document.getElementById("plugin-status");
-document.getElementById("copyBtn").addEventListener("click",async function(){try{await navigator.clipboard.writeText(NENETH);const old=this.textContent;this.textContent="Copied ✓";setTimeout(()=>this.textContent=old,1200)}catch(e){window.prompt("Copy NeneTH CA:",NENETH)}});
-let tries=0;const timer=setInterval(()=>{tries++;if(window.Jupiter&&typeof window.Jupiter.init==="function"){clearInterval(timer);try{window.Jupiter.init({displayMode:"integrated",integratedTargetId:"jupiter-plugin",defaultExplorer:"Solscan",autoConnect:false,formProps:{swapMode:"ExactIn",initialInputMint:SOL,initialOutputMint:NENETH,fixedMint:NENETH},branding:{name:"NeneTH",logoUri:"https://neneroyalfans.github.io/assets/logo.png"},onSuccess:({txid})=>{statusEl.textContent=txid?"Swap submitted successfully: "+txid:"Swap submitted successfully.";statusEl.style.color="#73e2a7"},onSwapError:({error})=>{statusEl.textContent="Swap was not completed. Review the quote/wallet message and try again.";statusEl.style.color="#f3a1bd";console.error(error)}});statusEl.textContent="Powered by Jupiter • NeneTH receive token is fixed."}catch(e){console.error(e);statusEl.innerHTML='Jupiter could not initialize. Please use the <a href="https://jup.ag/" target="_blank" rel="noopener">Jupiter fallback</a>.'}}else if(tries>60){clearInterval(timer);statusEl.innerHTML='Jupiter is taking too long to load. Please use the <a href="https://jup.ag/" target="_blank" rel="noopener">Jupiter fallback</a>.'}},250);
+  const NENETH = "F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5";
+  const SOL = "So11111111111111111111111111111111111111112";
+  const BUY_URL = "https://neneroyalfans.github.io/buy.html";
+  const statusEl = document.getElementById("plugin-status");
+  const gate = document.getElementById("mobileGate");
+  const envOk = document.getElementById("envOk");
+
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  document.getElementById("copyBtn").addEventListener("click", async function(){
+    try {
+      await navigator.clipboard.writeText(NENETH);
+      const old = this.textContent;
+      this.textContent = "Copied ✓";
+      setTimeout(() => this.textContent = old, 1200);
+    } catch(e) {
+      window.prompt("Copy NeneTH CA:", NENETH);
+    }
+  });
+
+  document.getElementById("copyMobileUrl")?.addEventListener("click", async function(){
+    try {
+      await navigator.clipboard.writeText(BUY_URL);
+      const old = this.textContent;
+      this.textContent = "Copied ✓";
+      setTimeout(() => this.textContent = old, 1200);
+    } catch(e) {
+      window.prompt("Copy this URL:", BUY_URL);
+    }
+  });
+
+  function phantomInjected(){
+    return !!(
+      window.phantom?.solana?.isPhantom ||
+      window.solana?.isPhantom
+    );
+  }
+
+  function initJupiter(){
+    let tries = 0;
+    const timer = setInterval(() => {
+      tries++;
+      if(window.Jupiter && typeof window.Jupiter.init === "function"){
+        clearInterval(timer);
+        try {
+          window.Jupiter.init({
+            displayMode: "integrated",
+            integratedTargetId: "jupiter-plugin",
+            defaultExplorer: "Solscan",
+            autoConnect: false,
+            localStoragePrefix: "neneth-jupiter-v4",
+            formProps: {
+              swapMode: "ExactIn",
+              initialInputMint: SOL,
+              initialOutputMint: NENETH,
+              fixedMint: NENETH
+            },
+            branding: {
+              name: "NeneTH",
+              logoUri: "https://neneroyalfans.github.io/assets/logo.png"
+            },
+            onSuccess: ({ txid }) => {
+              statusEl.textContent = txid ? "Swap submitted successfully: " + txid : "Swap submitted successfully.";
+              statusEl.style.color = "#73e2a7";
+            },
+            onSwapError: ({ error }) => {
+              statusEl.textContent = "Swap was not completed. Review the wallet message and try again.";
+              statusEl.style.color = "#f3a1bd";
+              console.error(error);
+            }
+          });
+          statusEl.textContent = "Powered by Jupiter • NeneTH receive token is fixed.";
+        } catch(e) {
+          console.error(e);
+          statusEl.innerHTML = 'Jupiter could not initialize. <a href="https://jup.ag/" target="_blank" rel="noopener">Open Jupiter</a>.';
+        }
+      } else if(tries > 80){
+        clearInterval(timer);
+        statusEl.innerHTML = 'Jupiter took too long to load. <a href="https://jup.ag/" target="_blank" rel="noopener">Open Jupiter</a>.';
+      }
+    }, 250);
+  }
+
+  // Desktop: always use Jupiter's official standalone wallet integration.
+  if(!isMobile){
+    initJupiter();
+    return;
+  }
+
+  // Mobile: allow Phantom only when the site is actually inside Phantom's in-app browser.
+  // Give injected providers a short time to appear before deciding.
+  let checks = 0;
+  const mobileCheck = setInterval(() => {
+    checks++;
+    if(phantomInjected()){
+      clearInterval(mobileCheck);
+      gate.style.display = "none";
+      envOk.style.display = "block";
+      initJupiter();
+    } else if(checks >= 8){
+      clearInterval(mobileCheck);
+      gate.style.display = "block";
+      document.getElementById("jupiter-plugin").style.display = "none";
+      statusEl.textContent = "Open this page in Phantom to connect a Phantom mobile wallet.";
+    }
+  }, 250);
 })();
 </script>
 </body>
