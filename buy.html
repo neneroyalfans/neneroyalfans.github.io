@@ -6,7 +6,6 @@
 <meta name="theme-color" content="#09070d">
 <title>Buy NeneTH | Nene Royal Fans</title>
 <meta name="description" content="Buy NeneTH on Solana. Desktop uses Jupiter embedded swap; mobile opens Jupiter directly.">
-<script src="https://plugin.jup.ag/plugin-v1.js" data-preload defer></script>
 <style>
 :root{--bg:#08070c;--panel:#141019;--line:#34283c;--text:#fff8fb;--muted:#b7aebb;--pink:#ff6aaa;--gold:#e8b96e;--green:#72dda4}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
@@ -28,7 +27,10 @@ header{position:sticky;top:0;z-index:10;background:rgba(8,7,12,.94);border-botto
 .bigbtn{display:block;width:100%;border:0;border-radius:14px;padding:15px 16px;text-align:center;font-weight:900;background:linear-gradient(90deg,#7658f5,#dc4f9e);color:white;margin-bottom:10px}.secbtn{display:block;width:100%;border:1px solid #44334e;border-radius:14px;padding:14px 16px;text-align:center;font-weight:800;background:#15101a;color:white;margin-bottom:10px}
 .mobile-ca{padding:13px;border:1px solid #34283d;background:#100c14;border-radius:12px;margin:14px 0}.mobile-ca small{display:block;color:#9f96a5;margin-bottom:5px}.mobile-ca code{font-size:11px;word-break:break-all}
 footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
-@media(max-width:760px){.nav{height:auto;min-height:62px;padding:8px 0;align-items:flex-start}.navlinks{gap:6px}.navlinks a{font-size:10px;padding:7px 8px}.brand span{font-size:14px}
+.mayan-shell{min-height:660px;border-radius:16px;overflow:hidden;background:#09070d}
+#WIDGET_ROOT{min-height:660px}
+@media(max-width:760px){.mayan-shell,#WIDGET_ROOT{min-height:720px}
+.nav{height:auto;min-height:62px;padding:8px 0;align-items:flex-start}.navlinks{gap:6px}.navlinks a{font-size:10px;padding:7px 8px}.brand span{font-size:14px}
   .wrap{width:min(100% - 18px,1120px)}.hero{padding:28px 0 18px}.hero h1{font-size:46px}.hero p{font-size:15px}.ca{display:none}
   .grid{display:block;padding:8px 0 22px}.desktop-only{display:none!important}.mobile-only{display:block!important}
   .proof-desktop{display:none!important}.mcard{margin-bottom:24px;padding:17px}.brand span{font-size:16px}.nav{height:62px}
@@ -58,31 +60,61 @@ footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
 </section>
 
 <section class="grid">
-  <div class="card desktop-only">
+  <div class="card">
     <h2>Swap to NeneTH 👑</h2>
-    <p class="sub">NeneTH is fixed as the receive token. Review the quote and price impact before approving in your wallet.</p>
-    <div id="jupiter-plugin"></div>
-    <div id="plugin-status">Loading Jupiter swap…</div>
-    <div class="warn">NeneTH has limited liquidity. Small swaps can move the price significantly. Always review minimum received and price impact.</div>
-  </div>
+    <p class="sub">Buy NeneTH directly from our Raydium CPMM liquidity pool. Pay with USDC, review the live pool quote, then approve the swap in your wallet without leaving this page.</p>
 
-  <div class="mobile-only">
-    <div class="mcard">
-      <span class="vtag">MOBILE MODE • SIMPLE FINAL</span>
-      <h2>Buy NeneTH on mobile 📱</h2>
-      <p>Tap the button below to open Jupiter with NeneTH preselected. If your mobile browser does not preserve the pair, use Copy NeneTH CA and paste it into Jupiter once.</p>
-      <div class="mobile-ca"><small>NeneTH Contract Address</small><code>F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5</code></div>
-      <a class="bigbtn" href="https://jup.ag/swap/SOL-F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank" rel="noopener">Open Jupiter — SOL → NeneTH</a>
-      <button class="secbtn" id="copyMobile" type="button">Copy NeneTH CA</button>
-      <a class="secbtn" href="https://www.geckoterminal.com/solana/pools/5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A" target="_blank" rel="noopener">View GeckoTerminal</a>
-      <a class="secbtn" href="/transparency.html">View Transparency</a>
-      <div class="warn">Always confirm the token address and review price impact before swapping.</div>
-      <div style="margin-top:12px;padding:12px;border:1px solid #34283d;border-radius:12px;background:#100c14">
-        <div style="font-size:12px;font-weight:800;margin-bottom:5px">If Jupiter does not keep the pair:</div>
-        <div style="font-size:11px;color:#a9a1ae">1) Tap <b>Copy NeneTH CA</b> → 2) Open Jupiter → 3) Paste the CA as the receive token.</div>
-      </div>
-
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px">
+      <button class="btn" id="phantomConnect" type="button">Connect Phantom</button>
+      <button class="btn" id="bitgetConnect" type="button">Connect Bitget</button>
     </div>
+
+    <div id="walletState" style="padding:10px 11px;border:1px solid #302638;border-radius:11px;background:#0e0b12;color:#aaa2ad;font-size:11px;margin-bottom:12px">
+      Wallet not connected.
+    </div>
+
+    <div style="border:1px solid #352a3d;background:#0f0c13;border-radius:15px;padding:14px;margin-bottom:10px">
+      <div style="font-size:11px;color:#9f96a6;margin-bottom:7px">You pay</div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="padding:9px 11px;border-radius:10px;background:#191421;border:1px solid #382c42;font-weight:800">USDC</div>
+        <input id="rayAmount" inputmode="decimal" value="1"
+          style="flex:1;min-width:0;border:0;outline:0;background:transparent;color:white;font-size:23px;text-align:right">
+      </div>
+    </div>
+
+    <div style="margin:-2px 0 8px;color:#aaa2ad;font-size:10px">USDC is required for this direct pool purchase.</div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px">
+      <button class="btn rayQuick" data-v="1" type="button">1</button>
+      <button class="btn rayQuick" data-v="2" type="button">2</button>
+      <button class="btn rayQuick" data-v="5" type="button">5</button>
+      <button class="btn rayQuick" data-v="10" type="button">10</button>
+    </div>
+
+    <div style="border:1px solid #352a3d;background:#0f0c13;border-radius:15px;padding:14px;margin-bottom:10px">
+      <div style="font-size:11px;color:#9f96a6;margin-bottom:7px">You receive (estimated)</div>
+      <div id="rayReceive" style="font-size:22px;font-weight:850;text-align:right">— NeneTH</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+      <div style="padding:9px;border:1px solid #302638;background:#0e0b12;border-radius:10px">
+        <span style="display:block;color:#958d9a;font-size:9px">Price impact</span>
+        <b id="rayImpact" style="font-size:12px">—</b>
+      </div>
+      <div style="padding:9px;border:1px solid #302638;background:#0e0b12;border-radius:10px">
+        <span style="display:block;color:#958d9a;font-size:9px">Minimum received</span>
+        <b id="rayMinimum" style="font-size:12px">—</b>
+      </div>
+    </div>
+
+    <button class="btn" id="rayQuoteBtn" type="button" style="width:100%;margin-bottom:8px">Read Pool & Refresh Quote</button>
+    <button class="btn primary" id="raySwapBtn" type="button" style="width:100%" disabled>Connect Wallet</button>
+
+    <div id="rayStatus" style="margin-top:10px;padding:10px 11px;border:1px solid #302638;border-radius:11px;background:#0e0b12;color:#aaa2ad;font-size:11px;word-break:break-word">
+      Waiting for Raydium quote.
+    </div>
+
+    <div class="warn">USDC is required for direct purchase. Always review the live quote, minimum received, price impact, and wallet transaction details before confirming.</div>
   </div>
 
   <aside class="card proof-desktop">
@@ -104,48 +136,322 @@ footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
 </section>
 </main>
 
-<footer><div class="wrap">NeneTH is an independent fan-community token. It is not an official token of Nene Royal, AGT, NBC, or any affiliated organization and does not represent ownership, endorsement, equity, or a promise of profit.<br><br><span style="opacity:.55">Buy page: V10 Simple Final</span></div></footer>
+<footer><div class="wrap">NeneTH is an independent fan-community token. It is not an official token of Nene Royal, AGT, NBC, or any affiliated organization and does not represent ownership, endorsement, equity, or a promise of profit.<br><br><span style="opacity:.55">Buy page: Production V17</span></div></footer>
 
-<script>
-(function(){
-  const NENETH="F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5";
-  const SOL="So11111111111111111111111111111111111111112";
-  const mobile=window.matchMedia("(max-width:760px)").matches;
+<script type="module">
+const POOL_ID = "5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A";
+const USDC = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
+const NENETH = "F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5";
+const USDC_DECIMALS = 6;
+const NENETH_DECIMALS = 9;
+const MAX_PRICE_IMPACT_PCT = 5;
+const RPC_URL = "https://mainnet.helius-rpc.com/?api-key=46fb09f0-d546-41c0-8f3c-d27e4f650f14";
 
-  function bindCopy(id){
-    document.getElementById(id)?.addEventListener("click",async function(){
-      try{await navigator.clipboard.writeText(NENETH);const t=this.textContent;this.textContent="Copied ✓";setTimeout(()=>this.textContent=t,1200)}catch(e){window.prompt("Copy NeneTH CA:",NENETH)}
-    });
+const $ = (id) => document.getElementById(id);
+const amountEl = $("rayAmount");
+const receiveEl = $("rayReceive");
+const impactEl = $("rayImpact");
+const minimumEl = $("rayMinimum");
+const walletState = $("walletState");
+const statusEl = $("rayStatus");
+const swapBtn = $("raySwapBtn");
+
+let provider = null;
+let walletType = "";
+let walletAddress = "";
+let sdk = null;
+let poolInfo = null;
+let poolKeys = null;
+let rpcData = null;
+let latestSwapResult = null;
+let latestInputAmount = null;
+let latestBaseIn = null;
+let modules = null;
+
+function errText(e) {
+  return e?.message || e?.toString?.() || String(e);
+}
+
+function atomicsUSDC(v, BN) {
+  const n = Number(v);
+  if (!Number.isFinite(n) || n <= 0) throw new Error("Enter a valid USDC amount.");
+  return new BN(String(Math.round(n * 10 ** USDC_DECIMALS)));
+}
+
+function fmt(raw, decimals) {
+  return (Number(raw.toString()) / 10 ** decimals).toLocaleString(undefined, {
+    maximumFractionDigits: 6
+  });
+}
+
+async function loadModules() {
+  if (modules) return modules;
+  statusEl.textContent = "Loading Raydium SDK V2…";
+
+  const [ray, web3, bnMod] = await Promise.all([
+    import("https://esm.sh/@raydium-io/raydium-sdk-v2?bundle"),
+    import("https://esm.sh/@solana/web3.js@1.98.4?bundle"),
+    import("https://esm.sh/bn.js@5.2.2?bundle")
+  ]);
+
+  modules = {
+    Raydium: ray.Raydium,
+    CurveCalculator: ray.CurveCalculator,
+    FeeOn: ray.FeeOn,
+    TxVersion: ray.TxVersion,
+    Connection: web3.Connection,
+    PublicKey: web3.PublicKey,
+    BN: bnMod.default
+  };
+
+  if (!modules.Raydium || !modules.CurveCalculator) {
+    throw new Error("Raydium SDK V2 did not load correctly in this browser.");
   }
-  bindCopy("copyDesktop"); bindCopy("copyMobile");
+  return modules;
+}
 
-  if(mobile) return;
+async function connectPhantom() {
+  try {
+    const p = window.phantom?.solana || (window.solana?.isPhantom ? window.solana : null);
+    if (!p) throw new Error("Phantom not detected. On mobile, open this page inside Phantom.");
+    const r = await p.connect();
+    walletAddress = (r.publicKey || p.publicKey).toString();
+    provider = p;
+    walletType = "Phantom";
+    walletState.innerHTML = '<span style="color:#72dda4">Connected:</span> Phantom • ' + walletAddress;
+    sdk = null;
+    await refreshDirectQuote();
+  } catch (e) {
+    walletState.innerHTML = '<span style="color:#ff8295">' + errText(e) + '</span>';
+  }
+}
 
-  const status=document.getElementById("plugin-status");
-  let n=0;
-  const timer=setInterval(()=>{
-    n++;
-    if(window.Jupiter && typeof window.Jupiter.init==="function"){
-      clearInterval(timer);
-      try{
-        window.Jupiter.init({
-          displayMode:"integrated",
-          integratedTargetId:"jupiter-plugin",
-          defaultExplorer:"Solscan",
-          autoConnect:false,
-          localStoragePrefix:"neneth-jupiter-v10",
-          formProps:{swapMode:"ExactIn",initialInputMint:SOL,initialOutputMint:NENETH,fixedMint:NENETH},
-          branding:{name:"NeneTH",logoUri:"https://neneroyalfans.github.io/assets/logo.png"},
-          onSuccess:({txid})=>{status.textContent=txid?"Swap submitted successfully: "+txid:"Swap submitted successfully.";status.style.color="#72dda4"},
-          onSwapError:({error})=>{status.textContent="Swap was not completed. Review the wallet message and try again.";status.style.color="#f3a1bd";console.error(error)}
-        });
-        status.textContent="Powered by Jupiter • NeneTH receive token is fixed.";
-      }catch(e){console.error(e);status.innerHTML='Jupiter could not initialize. <a href="https://jup.ag/swap/SOL-F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank">Open Jupiter</a>.'}
-    } else if(n>80) {
-      clearInterval(timer); status.innerHTML='Jupiter took too long to load. <a href="https://jup.ag/swap/SOL-F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank">Open Jupiter</a>.';
+async function connectBitget() {
+  try {
+    const p = window.bitkeep?.solana;
+    if (!p) throw new Error("Bitget not detected. Open this page inside Bitget Wallet or install its extension.");
+    const r = await p.connect();
+    let addr = r?.accounts?.[0]?.address || r?.publicKey?.toString?.();
+    if (!addr && p.publicKey) addr = p.publicKey.toString();
+    if (!addr && p.getAccount) addr = await p.getAccount();
+    if (!addr) throw new Error("Could not read Bitget wallet address.");
+    walletAddress = addr;
+    provider = p;
+    walletType = "Bitget";
+    walletState.innerHTML = '<span style="color:#72dda4">Connected:</span> Bitget • ' + walletAddress;
+    sdk = null;
+    await refreshDirectQuote();
+  } catch (e) {
+    walletState.innerHTML = '<span style="color:#ff8295">' + errText(e) + '</span>';
+  }
+}
+
+async function initRaydium() {
+  if (!walletAddress) throw new Error("Connect a wallet first.");
+  if (sdk) return sdk;
+
+  const m = await loadModules();
+  statusEl.textContent = "Connecting directly to Solana RPC…";
+
+  const connection = new m.Connection(RPC_URL, "confirmed");
+
+  sdk = await m.Raydium.load({
+    connection,
+    owner: new m.PublicKey(walletAddress),
+    cluster: "mainnet",
+    disableFeatureCheck: true,
+    disableLoadToken: true,
+    blockhashCommitment: "confirmed"
+  });
+
+  return sdk;
+}
+
+async function readExactPool() {
+  const raydium = await initRaydium();
+  statusEl.textContent = "Reading exact CPMM pool " + POOL_ID.slice(0, 8) + "… directly from RPC";
+
+  // This intentionally bypasses raydium.api.fetchPoolById() and Trade API routing.
+  const data = await raydium.cpmm.getPoolInfoFromRpc(POOL_ID);
+  if (!data?.poolInfo || !data?.rpcData) {
+    throw new Error("Could not parse the CPMM pool directly from RPC.");
+  }
+
+  poolInfo = data.poolInfo;
+  poolKeys = data.poolKeys;
+  rpcData = data.rpcData;
+
+  const mintA = poolInfo.mintA?.address;
+  const mintB = poolInfo.mintB?.address;
+
+  if (![mintA, mintB].includes(USDC) || ![mintA, mintB].includes(NENETH)) {
+    throw new Error(
+      "Pool mint mismatch. Pool contains " + mintA + " / " + mintB +
+      ", expected USDC / NeneTH."
+    );
+  }
+
+  return data;
+}
+
+async function refreshDirectQuote() {
+  try {
+    swapBtn.disabled = true;
+    latestSwapResult = null;
+
+    const m = await loadModules();
+    await readExactPool();
+
+    const inputAmount = atomicsUSDC(amountEl.value, m.BN);
+    const baseIn = USDC === poolInfo.mintA.address;
+
+    const inputReserve = baseIn ? rpcData.baseReserve : rpcData.quoteReserve;
+    const outputReserve = baseIn ? rpcData.quoteReserve : rpcData.baseReserve;
+
+    const swapResult = m.CurveCalculator.swapBaseInput(
+      inputAmount,
+      inputReserve,
+      outputReserve,
+      rpcData.configInfo.tradeFeeRate,
+      rpcData.configInfo.creatorFeeRate,
+      rpcData.configInfo.protocolFeeRate,
+      rpcData.configInfo.fundFeeRate,
+      rpcData.feeOn === m.FeeOn.BothToken || rpcData.feeOn === m.FeeOn.OnlyTokenB
+    );
+
+    latestSwapResult = swapResult;
+    latestInputAmount = inputAmount;
+    latestBaseIn = baseIn;
+
+    const out = swapResult.outputAmount;
+    const minOut = out.muln(99).divn(100); // UI estimate at 1% slippage
+
+    receiveEl.textContent = fmt(out, NENETH_DECIMALS) + " NeneTH";
+    minimumEl.textContent = fmt(minOut, NENETH_DECIMALS) + " NeneTH";
+
+    // Constant-product execution price impact derived from reserves before fees.
+    const inputHuman = Number(inputAmount.toString()) / 10 ** USDC_DECIMALS;
+    const outputHuman = Number(out.toString()) / 10 ** NENETH_DECIMALS;
+    const reserveInHuman = Number(inputReserve.toString()) / 10 ** USDC_DECIMALS;
+    const reserveOutHuman = Number(outputReserve.toString()) / 10 ** NENETH_DECIMALS;
+    const spot = reserveOutHuman / reserveInHuman;
+    const execution = outputHuman / inputHuman;
+    const impact = spot > 0 ? Math.max(0, (1 - execution / spot) * 100) : 100;
+
+    impactEl.textContent = impact.toFixed(4) + "%";
+    impactEl.style.color = impact > MAX_PRICE_IMPACT_PCT ? "#ff8295" : "#72dda4";
+
+    const reserveText = "Pool verified from RPC • " +
+      "USDC reserve ≈ " + (baseIn ? reserveInHuman : reserveOutHuman).toLocaleString(undefined, {maximumFractionDigits:2}) +
+      " • NeneTH reserve ≈ " + (baseIn ? reserveOutHuman : reserveInHuman).toLocaleString(undefined, {maximumFractionDigits:0});
+
+    if (impact > MAX_PRICE_IMPACT_PCT) {
+      statusEl.innerHTML = '<span style="color:#ff8295">Pool found, but Buy blocked:</span> estimated price impact ' +
+        impact.toFixed(2) + '% exceeds ' + MAX_PRICE_IMPACT_PCT + '%.<br>' + reserveText;
+      swapBtn.disabled = true;
+      swapBtn.textContent = "Price impact too high";
+    } else {
+      statusEl.innerHTML = '<span style="color:#72dda4">Direct CPMM pool found ✓</span><br>' +
+        reserveText + '<br>Pool ID: ' + POOL_ID;
+      swapBtn.disabled = !walletAddress;
+      swapBtn.textContent = walletAddress ? "Buy NeneTH with USDC" : "Connect Wallet";
     }
-  },250);
-})();
+  } catch (e) {
+    console.error("V15 direct CPMM quote error:", e);
+    latestSwapResult = null;
+    receiveEl.textContent = "— NeneTH";
+    minimumEl.textContent = "—";
+    impactEl.textContent = "—";
+    swapBtn.disabled = true;
+    swapBtn.textContent = walletAddress ? "Pool unavailable" : "Connect Wallet";
+    statusEl.innerHTML = '<span style="color:#ff8295">Direct CPMM error:</span> ' + errText(e);
+  }
+}
+
+async function directSwap() {
+  try {
+    if (!provider || !walletAddress) throw new Error("Connect a wallet first.");
+    if (!latestSwapResult) await refreshDirectQuote();
+    if (!latestSwapResult) throw new Error("No valid direct-pool quote.");
+
+    const raydium = await initRaydium();
+    const m = await loadModules();
+
+    swapBtn.disabled = true;
+    swapBtn.textContent = "Building CPMM transaction…";
+    statusEl.textContent = "Building a transaction against the exact NeneTH/USDC CPMM pool…";
+
+    // Official Raydium SDK V2 cpmm.swap flow.
+    const built = await raydium.cpmm.swap({
+      poolInfo,
+      poolKeys,
+      inputAmount: latestInputAmount,
+      swapResult: latestSwapResult,
+      slippage: 0.01,
+      baseIn: latestBaseIn,
+      txVersion: m.TxVersion.V0,
+      computeBudgetConfig: {
+        units: 600000,
+        microLamports: 50000
+      }
+    });
+
+    const tx = built?.transaction;
+    if (!tx) throw new Error("Raydium SDK did not build a transaction.");
+
+    swapBtn.textContent = "Confirm in wallet…";
+    statusEl.textContent = "Review the exact CPMM swap in your wallet before signing.";
+
+    let signature = "";
+
+    if (provider.signAndSendTransaction) {
+      const result = await provider.signAndSendTransaction(tx);
+      signature = typeof result === "string" ? result : (result?.signature || "");
+    } else if (provider.signTransaction) {
+      const signed = await provider.signTransaction(tx);
+      const connection = raydium.connection;
+      signature = await connection.sendRawTransaction(signed.serialize(), {
+        skipPreflight: false,
+        preflightCommitment: "confirmed"
+      });
+    } else {
+      throw new Error(walletType + " cannot sign this transaction.");
+    }
+
+    swapBtn.textContent = "Success ✓";
+    statusEl.innerHTML = '<span style="color:#72dda4">Swap successful ✓</span>' +
+      (signature ? ' <a href="https://solscan.io/tx/' + signature + '" target="_blank" style="text-decoration:underline">View on Solscan</a>' : '');
+
+    setTimeout(() => {
+      swapBtn.textContent = "Buy NeneTH with USDC";
+      refreshDirectQuote();
+    }, 2500);
+
+  } catch (e) {
+    console.error("V15 direct CPMM swap error:", e);
+    swapBtn.disabled = false;
+    swapBtn.textContent = "Buy NeneTH with USDC";
+    statusEl.innerHTML = '<span style="color:#ff8295">Swap error:</span> ' + errText(e);
+  }
+}
+
+$("phantomConnect").addEventListener("click", connectPhantom);
+$("bitgetConnect").addEventListener("click", connectBitget);
+$("rayQuoteBtn").addEventListener("click", refreshDirectQuote);
+$("raySwapBtn").addEventListener("click", directSwap);
+
+document.querySelectorAll(".rayQuick").forEach((b) => {
+  b.addEventListener("click", () => {
+    amountEl.value = b.dataset.v;
+    refreshDirectQuote();
+  });
+});
+
+amountEl.addEventListener("change", refreshDirectQuote);
+
+// SDK/pool parsing requires the wallet owner because the eventual transaction
+// builder needs an owner public key, so quote starts immediately after connect.
+statusEl.textContent = "Connect Phantom or Bitget to load a live USDC → NeneTH quote from the Raydium pool.";
 </script>
 </body>
 </html>
