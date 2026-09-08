@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#09070d">
+<title>Buy NeneTH | Nene Royal Fans</title>
+<meta name="description" content="Buy NeneTH on Solana. Desktop uses Jupiter embedded swap; mobile opens Jupiter directly.">
+<style>
+:root{--bg:#08070c;--panel:#141019;--line:#34283c;--text:#fff8fb;--muted:#b7aebb;--pink:#ff6aaa;--gold:#e8b96e;--green:#72dda4}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+body{min-height:100vh;background:radial-gradient(circle at 15% 10%,rgba(122,89,255,.16),transparent 32%),radial-gradient(circle at 85% 15%,rgba(255,100,170,.14),transparent 28%),#08070c}
+a{color:inherit;text-decoration:none}.wrap{width:min(1120px,calc(100% - 28px));margin:auto}
+header{position:sticky;top:0;z-index:10;background:rgba(8,7,12,.94);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(14px)}
+.nav{height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px}.navlinks{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}.navlinks a{padding:8px 11px;border-radius:10px;border:1px solid #3a2d42;background:#120e16;color:#e7dfe9;font-size:12px;font-weight:800}.navlinks a:hover{border-color:#7d5b89}.navlinks .active{background:linear-gradient(90deg,#e4a065,#ff6aaa);color:#180b11;border:0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}.brand img{width:42px;height:42px;border-radius:50%}
+.buypill{padding:10px 15px;border-radius:999px;background:linear-gradient(90deg,#e4a065,#ff6aaa);color:#180b11;font-weight:900}
+.hero{padding:52px 0 28px;text-align:center}.hero small{color:var(--gold);letter-spacing:.16em;font-weight:800}.hero h1{font-family:Georgia,serif;font-size:clamp(46px,8vw,82px);margin:8px 0 10px;background:linear-gradient(90deg,#ffe3b0,#f2bd72,#f7a8c7);-webkit-background-clip:text;color:transparent}.hero p{max-width:760px;margin:0 auto;color:#c9c0cd;font-size:17px}
+.ca{margin:20px auto 0;max-width:760px;border:1px solid #3a2e42;border-radius:13px;background:#110d15;padding:11px 12px;display:flex;gap:10px;align-items:center;justify-content:center}.ca code{font-size:12px;word-break:break-all}button{font:inherit}
+.copy{border:1px solid #493850;background:#1a141f;color:#fff;border-radius:9px;padding:8px 10px;cursor:pointer;white-space:nowrap}
+.grid{display:grid;grid-template-columns:1.05fr .95fr;gap:20px;padding:22px 0 42px}.card{background:linear-gradient(180deg,rgba(21,16,25,.97),rgba(12,9,15,.97));border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 24px 60px rgba(0,0,0,.34)}.card h2{margin:0 0 7px;font-size:25px}.sub{margin:0 0 16px;color:var(--muted);font-size:14px}
+.desktop-only{display:block}.mobile-only{display:none}#jupiter-plugin{min-height:510px;border-radius:16px;overflow:hidden;background:#09070d}#plugin-status{padding-top:10px;text-align:center;color:#aaa2ad;font-size:12px}
+.warn{margin-top:14px;border:1px solid rgba(232,185,110,.34);background:rgba(232,185,110,.07);color:#ead7b5;padding:13px 14px;border-radius:13px;font-size:12px}
+.trust{display:grid;grid-template-columns:1fr 1fr;gap:10px}.trust div{border:1px solid #30273a;background:#0f0c13;border-radius:12px;padding:12px}.trust b{display:block;color:var(--green);font-size:13px}.trust span{font-size:11px;color:#a99fac}
+.links{display:grid;gap:10px;margin-top:15px}.link{display:flex;justify-content:space-between;align-items:center;border:1px solid #33283b;background:#100c14;border-radius:12px;padding:12px 13px;font-weight:700;font-size:13px}.link span{color:#f2a8c7}
+.mcard{max-width:680px;margin:0 auto 44px;background:linear-gradient(180deg,#17111c,#0d0a10);border:1px solid #3c2d45;border-radius:20px;padding:20px}.mcard h2{font-size:28px;margin:0 0 8px}.mcard p{color:#c2b7c7;margin:0 0 16px}.vtag{display:inline-block;margin-bottom:12px;padding:6px 9px;border-radius:999px;background:#201524;border:1px solid #4a3653;color:#f0acc7;font-size:11px;font-weight:800;letter-spacing:.08em}
+.bigbtn{display:block;width:100%;border:0;border-radius:14px;padding:15px 16px;text-align:center;font-weight:900;background:linear-gradient(90deg,#7658f5,#dc4f9e);color:white;margin-bottom:10px}.secbtn{display:block;width:100%;border:1px solid #44334e;border-radius:14px;padding:14px 16px;text-align:center;font-weight:800;background:#15101a;color:white;margin-bottom:10px}
+.mobile-ca{padding:13px;border:1px solid #34283d;background:#100c14;border-radius:12px;margin:14px 0}.mobile-ca small{display:block;color:#9f96a5;margin-bottom:5px}.mobile-ca code{font-size:11px;word-break:break-all}
+footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
+.mayan-shell{min-height:660px;border-radius:16px;overflow:hidden;background:#09070d}
+#WIDGET_ROOT{min-height:660px}
+@media(max-width:760px){.mayan-shell,#WIDGET_ROOT{min-height:720px}
+.nav{height:auto;min-height:62px;padding:8px 0;align-items:flex-start}.navlinks{gap:6px}.navlinks a{font-size:10px;padding:7px 8px}.brand span{font-size:14px}
+  .wrap{width:min(100% - 18px,1120px)}.hero{padding:28px 0 18px}.hero h1{font-size:46px}.hero p{font-size:15px}.ca{display:none}
+  .grid{display:block;padding:8px 0 22px}.desktop-only{display:none!important}.mobile-only{display:block!important}
+  .proof-desktop{display:none!important}.mcard{margin-bottom:24px;padding:17px}.brand span{font-size:16px}.nav{height:62px}
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.98.4/lib/index.iife.min.js"></script>
+</head>
+<body>
+<header><div class="wrap nav">
+  <a class="brand" href="/"><img src="/assets/logo.png" alt="NeneTH"><span>Nene Royal Fans</span></a>
+  <div class="navlinks">
+    <a href="/">Home</a>
+    <a href="/#about">About Nene</a>
+    <a href="/#agt">AGT Journey</a>
+    <a href="/#music">Music</a>
+    <a href="/#telegram">Telegram</a>
+    <a href="/transparency.html">Transparency</a>
+    <a class="active" href="/buy.html">Buy NeneTH</a>
+  </div>
+</div></header>
+
+<main class="wrap">
+<section class="hero">
+  <small>SOLANA MAINNET • COMMUNITY TRADING GATEWAY</small>
+  <h1>Buy NeneTH</h1>
+  <p>Desktop swaps run directly on this page through Jupiter. On mobile, Jupiter opens directly with NeneTH preselected for a more reliable wallet experience.</p>
+  <div class="ca"><code>F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5</code><button class="copy" id="copyDesktop">Copy CA</button></div>
+</section>
+
+<section class="grid">
+  <div class="card">
+    <h2>Swap to NeneTH 👑</h2>
+    <p class="sub">Direct Raydium Trade API test. SOL is the input token and NeneTH is fixed as the output token. The swap stays on this page.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px">
+      <button class="btn" id="phantomConnect" type="button">Connect Phantom</button>
+      <button class="btn" id="bitgetConnect" type="button">Connect Bitget</button>
+    </div>
+
+    <div id="walletState" style="padding:10px 11px;border:1px solid #302638;border-radius:11px;background:#0e0b12;color:#aaa2ad;font-size:11px;margin-bottom:12px">
+      Wallet not connected.
+    </div>
+
+    <div style="border:1px solid #352a3d;background:#0f0c13;border-radius:15px;padding:14px;margin-bottom:10px">
+      <div style="font-size:11px;color:#9f96a6;margin-bottom:7px">You pay</div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="padding:9px 11px;border-radius:10px;background:#191421;border:1px solid #382c42;font-weight:800">◎ SOL</div>
+        <input id="rayAmount" inputmode="decimal" value="0.001"
+          style="flex:1;min-width:0;border:0;outline:0;background:transparent;color:white;font-size:23px;text-align:right">
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px">
+      <button class="btn rayQuick" data-v="0.001" type="button">0.001</button>
+      <button class="btn rayQuick" data-v="0.005" type="button">0.005</button>
+      <button class="btn rayQuick" data-v="0.01" type="button">0.01</button>
+      <button class="btn rayQuick" data-v="0.05" type="button">0.05</button>
+    </div>
+
+    <div style="border:1px solid #352a3d;background:#0f0c13;border-radius:15px;padding:14px;margin-bottom:10px">
+      <div style="font-size:11px;color:#9f96a6;margin-bottom:7px">You receive (estimated)</div>
+      <div id="rayReceive" style="font-size:22px;font-weight:850;text-align:right">— NeneTH</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+      <div style="padding:9px;border:1px solid #302638;background:#0e0b12;border-radius:10px">
+        <span style="display:block;color:#958d9a;font-size:9px">Price impact</span>
+        <b id="rayImpact" style="font-size:12px">—</b>
+      </div>
+      <div style="padding:9px;border:1px solid #302638;background:#0e0b12;border-radius:10px">
+        <span style="display:block;color:#958d9a;font-size:9px">Minimum received</span>
+        <b id="rayMinimum" style="font-size:12px">—</b>
+      </div>
+    </div>
+
+    <button class="btn" id="rayQuoteBtn" type="button" style="width:100%;margin-bottom:8px">Refresh Raydium Quote</button>
+    <button class="btn primary" id="raySwapBtn" type="button" style="width:100%" disabled>Connect Wallet</button>
+
+    <div id="rayStatus" style="margin-top:10px;padding:10px 11px;border:1px solid #302638;border-radius:11px;background:#0e0b12;color:#aaa2ad;font-size:11px;word-break:break-word">
+      Waiting for Raydium quote.
+    </div>
+
+    <div class="warn">TEST ONLY: use a very small amount first. Raydium may return multiple setup/swap transactions; this test signs and submits them in order. Do not confirm if Phantom/Bitget shows a suspicious or reverted simulation.</div>
+  </div>
+
+  <aside class="card proof-desktop">
+    <h2>Trade with transparency</h2>
+    <p class="sub">Public on-chain controls and project proofs are available before you swap.</p>
+    <div class="trust">
+      <div><b>✓ Mint Revoked</b><span>Mint authority removed.</span></div>
+      <div><b>✓ Freeze Revoked</b><span>Freeze authority removed.</span></div>
+      <div><b>✓ Founder Vesting</b><span>200M NeneTH • Streamflow.</span></div>
+      <div><b>✓ LP Lock</b><span>365 days • StakePoint.</span></div>
+    </div>
+    <div class="links">
+      <a class="link" href="/transparency.html">Full Transparency <span>→</span></a>
+      <a class="link" href="https://solscan.io/token/F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank" rel="noopener">Solscan <span>→</span></a>
+      <a class="link" href="https://dexscreener.com/solana/5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A" target="_blank" rel="noopener">DEXScreener <span>→</span></a>
+      <a class="link" href="https://www.geckoterminal.com/solana/pools/5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A" target="_blank" rel="noopener">GeckoTerminal <span>→</span></a>
+    </div>
+  </aside>
+</section>
+</main>
+
+<footer><div class="wrap">NeneTH is an independent fan-community token. It is not an official token of Nene Royal, AGT, NBC, or any affiliated organization and does not represent ownership, endorsement, equity, or a promise of profit.<br><br><span style="opacity:.55">Buy page: Raydium Direct Test V13</span></div></footer>
+
+<script>
+(function(){
+  const SOL = "So11111111111111111111111111111111111111112";
+  const NENETH = "F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5";
+  const API = "https://transaction-v1.raydium.io";
+  const RPC = "https://api.mainnet-beta.solana.com";
+  const NENETH_DECIMALS = 9;
+  const MAX_PRICE_IMPACT_PCT = 5;
+
+  let provider = null;
+  let walletType = "";
+  let walletAddress = "";
+  let latestQuote = null;
+  let quoteAt = 0;
+
+  const $ = (id) => document.getElementById(id);
+  const amountEl = $("rayAmount");
+  const receiveEl = $("rayReceive");
+  const impactEl = $("rayImpact");
+  const minimumEl = $("rayMinimum");
+  const walletState = $("walletState");
+  const statusEl = $("rayStatus");
+  const swapBtn = $("raySwapBtn");
+
+  function atomicsSOL(v) {
+    const n = Number(v);
+    if (!Number.isFinite(n) || n <= 0) throw new Error("Enter a valid SOL amount.");
+    return String(Math.round(n * 1e9));
+  }
+
+  function fmtToken(raw) {
+    return (Number(raw) / 10 ** NENETH_DECIMALS).toLocaleString(undefined, { maximumFractionDigits: 6 });
+  }
+
+  function getImpactPct(q) {
+    const p = Number(q?.data?.priceImpactPct ?? 0);
+    return Number.isFinite(p) ? p : 0;
+  }
+
+  function setConnected(type, addr, p) {
+    provider = p;
+    walletType = type;
+    walletAddress = addr;
+    walletState.innerHTML = '<span style="color:#72dda4">Connected:</span> ' + type + ' • ' + addr;
+    swapBtn.textContent = "Buy NeneTH";
+    getQuote();
+  }
+
+  async function connectPhantom() {
+    try {
+      const p = window.phantom?.solana || (window.solana?.isPhantom ? window.solana : null);
+      if (!p) throw new Error("Phantom not detected. On mobile, open this page inside Phantom.");
+      const r = await p.connect();
+      setConnected("Phantom", (r.publicKey || p.publicKey).toString(), p);
+    } catch (e) {
+      walletState.innerHTML = '<span style="color:#ff8295">' + e.message + '</span>';
+    }
+  }
+
+  async function connectBitget() {
+    try {
+      const p = window.bitkeep?.solana;
+      if (!p) throw new Error("Bitget not detected. Open this page inside Bitget Wallet or install its extension.");
+      const r = await p.connect();
+      let addr = r?.accounts?.[0]?.address || r?.publicKey?.toString?.();
+      if (!addr && p.publicKey) addr = p.publicKey.toString();
+      if (!addr && p.getAccount) addr = await p.getAccount();
+      if (!addr) throw new Error("Could not read Bitget wallet address.");
+      setConnected("Bitget", addr, p);
+    } catch (e) {
+      walletState.innerHTML = '<span style="color:#ff8295">' + e.message + '</span>';
+    }
+  }
+
+  async function getQuote() {
+    try {
+      statusEl.textContent = "Getting Raydium quote…";
+      swapBtn.disabled = true;
+
+      const params = new URLSearchParams({
+        inputMint: SOL,
+        outputMint: NENETH,
+        amount: atomicsSOL(amountEl.value),
+        slippageBps: "100",
+        txVersion: "V0"
+      });
+
+      const r = await fetch(API + "/compute/swap-base-in?" + params.toString());
+      const q = await r.json();
+      if (!r.ok || !q.success) throw new Error(q.msg || ("Raydium quote HTTP " + r.status));
+
+      latestQuote = q;
+      quoteAt = Date.now();
+
+      const impact = getImpactPct(q);
+      const out = q?.data?.outputAmount;
+      const min = q?.data?.otherAmountThreshold;
+
+      receiveEl.textContent = out ? fmtToken(out) + " NeneTH" : "— NeneTH";
+      minimumEl.textContent = min ? fmtToken(min) + " NeneTH" : "—";
+      impactEl.textContent = impact.toFixed(4) + "%";
+      impactEl.style.color = impact > MAX_PRICE_IMPACT_PCT ? "#ff8295" : "#72dda4";
+
+      if (impact > MAX_PRICE_IMPACT_PCT) {
+        statusEl.innerHTML = '<span style="color:#ff8295">Blocked:</span> price impact is above ' + MAX_PRICE_IMPACT_PCT + '%.';
+        swapBtn.disabled = true;
+      } else {
+        const pools = (q?.data?.routePlan || []).map(x => x.poolId).filter(Boolean);
+        statusEl.innerHTML = '<span style="color:#72dda4">Quote ready.</span>' +
+          (pools.length ? ' Route pool(s): ' + pools.join(" → ") : '');
+        swapBtn.disabled = !walletAddress;
+      }
+    } catch (e) {
+      console.error("Raydium quote error:", e);
+      latestQuote = null;
+      receiveEl.textContent = "— NeneTH";
+      minimumEl.textContent = "—";
+      impactEl.textContent = "—";
+      statusEl.innerHTML = '<span style="color:#ff8295">Quote error:</span> ' + e.message;
+      swapBtn.disabled = true;
+    }
+  }
+
+  function b64ToBytes(b64) {
+    const bin = atob(b64);
+    const arr = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+    return arr;
+  }
+
+  async function sendRawViaRpc(raw) {
+    const body = {
+      jsonrpc: "2.0",
+      id: 1,
+      method: "sendTransaction",
+      params: [
+        btoa(String.fromCharCode(...raw)),
+        { encoding: "base64", skipPreflight: false, preflightCommitment: "confirmed" }
+      ]
+    };
+    const r = await fetch(RPC, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    const j = await r.json();
+    if (j.error) throw new Error(j.error.message || "RPC sendTransaction failed");
+    return j.result;
+  }
+
+  async function signAndSendOne(txB64) {
+    const tx = solanaWeb3.VersionedTransaction.deserialize(b64ToBytes(txB64));
+
+    // Prefer wallet's own send path when available.
+    if (provider?.signAndSendTransaction) {
+      const res = await provider.signAndSendTransaction(tx);
+      if (typeof res === "string") return res;
+      if (res?.signature) return res.signature;
+    }
+
+    if (!provider?.signTransaction) throw new Error(walletType + " cannot sign this transaction.");
+    const signed = await provider.signTransaction(tx);
+    return await sendRawViaRpc(signed.serialize());
+  }
+
+  async function buildAndSwap() {
+    try {
+      if (!provider || !walletAddress) throw new Error("Connect a wallet first.");
+      if (!latestQuote || Date.now() - quoteAt > 25000) await getQuote();
+      if (!latestQuote) throw new Error("No valid Raydium quote.");
+
+      const impact = getImpactPct(latestQuote);
+      if (impact > MAX_PRICE_IMPACT_PCT) throw new Error("Price impact exceeds safety limit.");
+
+      swapBtn.disabled = true;
+      swapBtn.textContent = "Building transaction…";
+      statusEl.textContent = "Asking Raydium to build the swap transaction…";
+
+      const payload = {
+        wallet: walletAddress,
+        swapResponse: latestQuote,
+        txVersion: "V0",
+        computeUnitPriceMicroLamports: "50000",
+        wrapSol: true,
+        unwrapSol: false
+      };
+
+      const r = await fetch(API + "/transaction/swap-base-in", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const built = await r.json();
+      if (!r.ok || !built.success) throw new Error(built.msg || ("Raydium transaction HTTP " + r.status));
+
+      let txItems = [];
+      if (Array.isArray(built.data)) txItems = built.data;
+      else if (built.data?.transaction) txItems = [built.data];
+      else throw new Error("Raydium returned no transaction.");
+
+      const signatures = [];
+      for (let i = 0; i < txItems.length; i++) {
+        swapBtn.textContent = "Confirm " + (i + 1) + "/" + txItems.length + " in wallet…";
+        statusEl.textContent = "Signing Raydium transaction " + (i + 1) + " of " + txItems.length + "…";
+        const sig = await signAndSendOne(txItems[i].transaction);
+        signatures.push(sig);
+      }
+
+      swapBtn.textContent = "Success ✓";
+      const sig = signatures[signatures.length - 1];
+      statusEl.innerHTML = '<span style="color:#72dda4">Swap submitted successfully.</span>' +
+        (sig ? ' <a href="https://solscan.io/tx/' + sig + '" target="_blank" style="text-decoration:underline">View on Solscan</a>' : '');
+
+      setTimeout(() => {
+        swapBtn.textContent = "Buy NeneTH";
+        getQuote();
+      }, 2500);
+
+    } catch (e) {
+      console.error("Raydium swap error:", e);
+      swapBtn.disabled = false;
+      swapBtn.textContent = "Buy NeneTH";
+      statusEl.innerHTML = '<span style="color:#ff8295">Swap error:</span> ' + e.message;
+    }
+  }
+
+  $("phantomConnect").addEventListener("click", connectPhantom);
+  $("bitgetConnect").addEventListener("click", connectBitget);
+  $("rayQuoteBtn").addEventListener("click", getQuote);
+  $("raySwapBtn").addEventListener("click", buildAndSwap);
+  document.querySelectorAll(".rayQuick").forEach(b => b.addEventListener("click", () => {
+    amountEl.value = b.dataset.v;
+    getQuote();
+  }));
+  amountEl.addEventListener("change", getQuote);
+
+  setTimeout(getQuote, 500);
+})();
+</script>
+</body>
+</html>
