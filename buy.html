@@ -13,7 +13,7 @@
 body{min-height:100vh;background:radial-gradient(circle at 15% 10%,rgba(122,89,255,.16),transparent 32%),radial-gradient(circle at 85% 15%,rgba(255,100,170,.14),transparent 28%),#08070c}
 a{color:inherit;text-decoration:none}.wrap{width:min(1120px,calc(100% - 28px));margin:auto}
 header{position:sticky;top:0;z-index:10;background:rgba(8,7,12,.94);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(14px)}
-.nav{height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.nav{height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px}.navlinks{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}.navlinks a{padding:8px 11px;border-radius:10px;border:1px solid #3a2d42;background:#120e16;color:#e7dfe9;font-size:12px;font-weight:800}.navlinks a:hover{border-color:#7d5b89}.navlinks .active{background:linear-gradient(90deg,#e4a065,#ff6aaa);color:#180b11;border:0}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800}.brand img{width:42px;height:42px;border-radius:50%}
 .buypill{padding:10px 15px;border-radius:999px;background:linear-gradient(90deg,#e4a065,#ff6aaa);color:#180b11;font-weight:900}
 .hero{padding:52px 0 28px;text-align:center}.hero small{color:var(--gold);letter-spacing:.16em;font-weight:800}.hero h1{font-family:Georgia,serif;font-size:clamp(46px,8vw,82px);margin:8px 0 10px;background:linear-gradient(90deg,#ffe3b0,#f2bd72,#f7a8c7);-webkit-background-clip:text;color:transparent}.hero p{max-width:760px;margin:0 auto;color:#c9c0cd;font-size:17px}
@@ -28,7 +28,7 @@ header{position:sticky;top:0;z-index:10;background:rgba(8,7,12,.94);border-botto
 .bigbtn{display:block;width:100%;border:0;border-radius:14px;padding:15px 16px;text-align:center;font-weight:900;background:linear-gradient(90deg,#7658f5,#dc4f9e);color:white;margin-bottom:10px}.secbtn{display:block;width:100%;border:1px solid #44334e;border-radius:14px;padding:14px 16px;text-align:center;font-weight:800;background:#15101a;color:white;margin-bottom:10px}
 .mobile-ca{padding:13px;border:1px solid #34283d;background:#100c14;border-radius:12px;margin:14px 0}.mobile-ca small{display:block;color:#9f96a5;margin-bottom:5px}.mobile-ca code{font-size:11px;word-break:break-all}
 footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
-@media(max-width:760px){
+@media(max-width:760px){.nav{height:auto;min-height:62px;padding:8px 0;align-items:flex-start}.navlinks{gap:6px}.navlinks a{font-size:10px;padding:7px 8px}.brand span{font-size:14px}
   .wrap{width:min(100% - 18px,1120px)}.hero{padding:28px 0 18px}.hero h1{font-size:46px}.hero p{font-size:15px}.ca{display:none}
   .grid{display:block;padding:8px 0 22px}.desktop-only{display:none!important}.mobile-only{display:block!important}
   .proof-desktop{display:none!important}.mcard{margin-bottom:24px;padding:17px}.brand span{font-size:16px}.nav{height:62px}
@@ -38,7 +38,15 @@ footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
 <body>
 <header><div class="wrap nav">
   <a class="brand" href="/"><img src="/assets/logo.png" alt="NeneTH"><span>Nene Royal Fans</span></a>
-  <a class="buypill" href="/buy.html">Buy NeneTH</a>
+  <div class="navlinks">
+    <a href="/">Home</a>
+    <a href="/#about">About Nene</a>
+    <a href="/#agt">AGT Journey</a>
+    <a href="/#music">Music</a>
+    <a href="/#telegram">Telegram</a>
+    <a href="/transparency.html">Transparency</a>
+    <a class="active" href="/buy.html">Buy NeneTH</a>
+  </div>
 </div></header>
 
 <main class="wrap">
