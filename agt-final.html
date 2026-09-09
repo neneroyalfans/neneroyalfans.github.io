@@ -84,6 +84,15 @@ footer{padding:28px 0 42px;color:#96889b;font-size:12px;line-height:1.6}
   .goal,.wallet,.transparency,.rules,.budget .card{grid-column:1/-1}
   .phase{grid-template-columns:1fr}
 }
+
+.activity-list{display:grid;gap:10px;margin-top:14px}
+.activity-row{display:grid;grid-template-columns:110px 1fr auto;gap:12px;align-items:center;padding:12px 14px;border:1px solid #33233d;border-radius:12px;background:#0e0a14}
+.activity-row .asset{font-weight:900}
+.activity-row .amount{font-weight:900;color:var(--green);text-align:right}
+.activity-row .meta{font-size:11px;color:var(--muted)}
+.activity-empty{padding:14px;border:1px dashed #3a2b44;border-radius:12px;color:var(--muted);text-align:center}
+@media(max-width:700px){.activity-row{grid-template-columns:1fr auto}.activity-row .meta{grid-column:1/-1}}
+
 </style>
 </head>
 <body>
@@ -94,6 +103,7 @@ footer{padding:28px 0 42px;color:#96889b;font-size:12px;line-height:1.6}
       <a href="/">Home</a>
       <a href="/transparency.html">Transparency</a>
       <a href="buy.html">Buy NeneTH</a>
+      <a href="#activity">Activity</a>
       <a href="#timeline">Timeline</a>
       <a href="#fund">Fund</a>
       <a class="cta" href="#support">Join the Support</a>
@@ -163,6 +173,24 @@ footer{padding:28px 0 42px;color:#96889b;font-size:12px;line-height:1.6}
       </div>
 
 </div>
+  </section>
+
+  <section class="wrap section" id="activity">
+    <div class="kicker">Live Transparency</div>
+    <h2>Latest Contributions</h2>
+    <p class="lead">
+      Recent inbound transfers detected on-chain for the Community Fund wallet and its USDC / NeneTH token accounts.
+      This list is informational and updates from public Solana transaction data.
+    </p>
+    <div class="card">
+      <div class="btnrow" style="margin-top:0">
+        <button type="button" id="refreshActivityBtn">Refresh Activity</button>
+        <a class="btn secondary" target="_blank" rel="noopener"
+           href="https://solscan.io/account/3ZEzt6KWpmtM9Z2QfVsbQ6kgvmkAQRn5C2TpHfoAKyw9">View Full History on Solscan</a>
+      </div>
+      <div id="activityStatus" class="muted" style="margin-top:10px;font-size:11px">Loading recent contributions…</div>
+      <div id="activityList" class="activity-list"></div>
+    </div>
   </section>
 
   <section class="wrap section">
@@ -236,7 +264,7 @@ footer{padding:28px 0 42px;color:#96889b;font-size:12px;line-height:1.6}
     <strong>NeneTH / Nene Royal Fans</strong><br>
     Independent fan-community initiative. Not affiliated with Nene Royal,
     America's Got Talent, NBC, or official management. Contributions are voluntary
-    and do not represent an investment, equity, or guarantee of financial return.<br><span style="opacity:.65">Campaign page: V4 USDC Raised Label</span>
+    and do not represent an investment, equity, or guarantee of financial return.<br><span style="opacity:.65">Campaign page: V7 Token Account Activity Fix</span>
   </div>
 </footer>
 
@@ -322,6 +350,200 @@ async function loadFundBalances() {
 document.getElementById("refreshFundBtn")?.addEventListener("click", loadFundBalances);
 loadFundBalances();
 setInterval(loadFundBalances, 60000);
+
+
+function shortAddr(a){
+  if (!a) return "";
+  return a.slice(0,4) + "…" + a.slice(-4);
+}
+
+function formatTime(ts){
+  if (!ts) return "Time unavailable";
+  return new Date(ts * 1000).toLocaleString();
+}
+
+async function getOwnedTokenAccountsForActivity(){
+  const result = await rpc("getTokenAccountsByOwner", [
+    FUND_WALLET,
+    { programId: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA" },
+    { encoding: "jsonParsed", commitment: "confirmed" }
+  ]);
+
+  const accounts = [];
+  for (const item of result.value || []){
+    const mint = item.account?.data?.parsed?.info?.mint;
+    if (mint === FUND_USDC_MINT || mint === FUND_NENETH_MINT){
+      accounts.push(item.pubkey);
+    }
+  }
+  return accounts;
+}
+
+async function getRecentSignatures(limit=100){
+  const addresses = [FUND_WALLET, ...(await getOwnedTokenAccountsForActivity())];
+  const all = [];
+  const seen = new Set();
+
+  for (const address of addresses){
+    try{
+      const result = await rpc("getSignaturesForAddress", [
+        address,
+        { limit, commitment: "confirmed" }
+      ]);
+      for (const s of result || []){
+        if (seen.has(s.signature)) continue;
+        seen.add(s.signature);
+        all.push(s);
+      }
+    }catch(e){
+      console.warn("Signature scan failed for", address, e);
+    }
+  }
+
+  all.sort((a,b) => (b.blockTime || 0) - (a.blockTime || 0));
+  return all;
+}
+
+async function getParsedTx(signature){
+  return await rpc("getTransaction", [
+    signature,
+    {
+      encoding: "jsonParsed",
+      commitment: "confirmed",
+      maxSupportedTransactionVersion: 0
+    }
+  ]);
+}
+
+function tokenMintLabel(mint){
+  if (mint === FUND_USDC_MINT) return "USDC";
+  if (mint === FUND_NENETH_MINT) return "NeneTH";
+  return shortAddr(mint);
+}
+
+function collectInboundFromParsedTx(tx){
+  const rows = [];
+  if (!tx?.meta || !tx?.transaction?.message) return rows;
+
+  const keys = tx.transaction.message.accountKeys || [];
+  const walletIndex = keys.findIndex(k => (k.pubkey || k) === FUND_WALLET);
+
+  // Native SOL net increase for the fund wallet.
+  if (walletIndex >= 0 && tx.meta.preBalances && tx.meta.postBalances){
+    const deltaLamports = (tx.meta.postBalances[walletIndex] || 0) - (tx.meta.preBalances[walletIndex] || 0);
+    if (deltaLamports > 0){
+      rows.push({ asset: "SOL", amount: deltaLamports / 1e9 });
+    }
+  }
+
+  // SPL token balance increases owned by the fund wallet.
+  const pre = new Map();
+  for (const b of tx.meta.preTokenBalances || []){
+    if (b.owner !== FUND_WALLET) continue;
+    const key = b.mint;
+    pre.set(key, Number(b.uiTokenAmount?.uiAmount || 0));
+  }
+
+  const post = new Map();
+  for (const b of tx.meta.postTokenBalances || []){
+    if (b.owner !== FUND_WALLET) continue;
+    const key = b.mint;
+    post.set(key, Number(b.uiTokenAmount?.uiAmount || 0));
+  }
+
+  for (const [mint, postAmt] of post.entries()){
+    const preAmt = pre.get(mint) || 0;
+    const delta = postAmt - preAmt;
+    if (delta > 0){
+      rows.push({ asset: tokenMintLabel(mint), amount: delta });
+    }
+  }
+
+  return rows;
+}
+
+async function loadContributionActivity(){
+  const list = document.getElementById("activityList");
+  const status = document.getElementById("activityStatus");
+  const btn = document.getElementById("refreshActivityBtn");
+  if (!list || !status) return;
+
+  if (btn) btn.disabled = true;
+  status.textContent = "Refreshing on-chain contribution history…";
+  list.innerHTML = "";
+
+  try{
+    const sigs = await getRecentSignatures(100);
+    const results = [];
+
+    for (const s of sigs.slice(0, 100)){
+      try{
+        const tx = await getParsedTx(s.signature);
+        const inbound = collectInboundFromParsedTx(tx);
+        for (const r of inbound){
+          results.push({
+            ...r,
+            signature: s.signature,
+            blockTime: s.blockTime
+          });
+        }
+      }catch(e){
+        console.warn("Activity parse failed", s.signature, e);
+      }
+    }
+
+    if (!results.length){
+      list.innerHTML = '<div class="activity-empty">No recent inbound contributions detected yet.</div>';
+      status.textContent = "No recent inbound contributions detected.";
+      return;
+    }
+
+    const dedup = [];
+    const seen = new Set();
+    for (const r of results){
+      const key = [r.signature, r.asset, Number(r.amount).toFixed(12)].join("|");
+      if (seen.has(key)) continue;
+      seen.add(key);
+      dedup.push(r);
+    }
+
+    const order = { USDC: 1, NeneTH: 2, SOL: 3 };
+    dedup.sort((a,b) => (b.blockTime||0)-(a.blockTime||0) || ((order[a.asset]||9)-(order[b.asset]||9)));
+
+    for (const r of dedup.slice(0, 20)){
+      const row = document.createElement("div");
+      row.className = "activity-row";
+      let decimals = r.asset === "NeneTH" ? 4 : 6;
+      let amount = Number(r.amount).toLocaleString(undefined,{maximumFractionDigits:decimals});
+      row.innerHTML = `
+        <div class="asset">${r.asset}</div>
+        <div>
+          <div class="meta">${formatTime(r.blockTime)}</div>
+          <div class="meta">${shortAddr(r.signature)}</div>
+        </div>
+        <div class="amount">+${amount} ${r.asset}</div>
+      `;
+      row.style.cursor = "pointer";
+      row.title = "Open transaction on Solscan";
+      row.addEventListener("click", () => {
+        window.open("https://solscan.io/tx/" + r.signature, "_blank", "noopener");
+      });
+      list.appendChild(row);
+    }
+
+    status.textContent = "Live on-chain contribution activity • Last updated " + new Date().toLocaleTimeString();
+  }catch(err){
+    console.error(err);
+    list.innerHTML = '<div class="activity-empty">Could not load recent activity right now. Use Solscan for the complete public history.</div>';
+    status.textContent = "Activity refresh unavailable right now.";
+  }finally{
+    if (btn) btn.disabled = false;
+  }
+}
+
+document.getElementById("refreshActivityBtn")?.addEventListener("click", loadContributionActivity);
+loadContributionActivity();
+setInterval(loadContributionActivity, 120000);
 
 async function copyWallet(){
   const text = document.getElementById('wallet').textContent.trim();
