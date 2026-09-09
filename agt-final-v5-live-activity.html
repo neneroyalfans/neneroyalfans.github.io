@@ -264,7 +264,7 @@ footer{padding:28px 0 42px;color:#96889b;font-size:12px;line-height:1.6}
     <strong>NeneTH / Nene Royal Fans</strong><br>
     Independent fan-community initiative. Not affiliated with Nene Royal,
     America's Got Talent, NBC, or official management. Contributions are voluntary
-    and do not represent an investment, equity, or guarantee of financial return.<br><span style="opacity:.65">Campaign page: V5 Live Contribution Activity</span>
+    and do not represent an investment, equity, or guarantee of financial return.<br><span style="opacity:.65">Campaign page: V6 Expanded Contribution History</span>
   </div>
 </footer>
 
@@ -362,7 +362,7 @@ function formatTime(ts){
   return new Date(ts * 1000).toLocaleString();
 }
 
-async function getRecentSignatures(limit=25){
+async function getRecentSignatures(limit=100){
   const result = await rpc("getSignaturesForAddress", [
     FUND_WALLET,
     { limit, commitment: "confirmed" }
@@ -435,14 +435,14 @@ async function loadContributionActivity(){
   if (!list || !status) return;
 
   if (btn) btn.disabled = true;
-  status.textContent = "Refreshing recent on-chain contributions…";
+  status.textContent = "Refreshing on-chain contribution history…";
   list.innerHTML = "";
 
   try{
-    const sigs = await getRecentSignatures(20);
+    const sigs = await getRecentSignatures(100);
     const results = [];
 
-    for (const s of sigs.slice(0, 12)){
+    for (const s of sigs.slice(0, 60)){
       try{
         const tx = await getParsedTx(s.signature);
         const inbound = collectInboundFromParsedTx(tx);
@@ -464,10 +464,19 @@ async function loadContributionActivity(){
       return;
     }
 
-    const order = { USDC: 1, NeneTH: 2, SOL: 3 };
-    results.sort((a,b) => (b.blockTime||0)-(a.blockTime||0) || ((order[a.asset]||9)-(order[b.asset]||9)));
+    const dedup = [];
+    const seen = new Set();
+    for (const r of results){
+      const key = [r.signature, r.asset, Number(r.amount).toFixed(12)].join("|");
+      if (seen.has(key)) continue;
+      seen.add(key);
+      dedup.push(r);
+    }
 
-    for (const r of results.slice(0, 10)){
+    const order = { USDC: 1, NeneTH: 2, SOL: 3 };
+    dedup.sort((a,b) => (b.blockTime||0)-(a.blockTime||0) || ((order[a.asset]||9)-(order[b.asset]||9)));
+
+    for (const r of dedup.slice(0, 20)){
       const row = document.createElement("div");
       row.className = "activity-row";
       let decimals = r.asset === "NeneTH" ? 4 : 6;
