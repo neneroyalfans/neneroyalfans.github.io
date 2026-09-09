@@ -179,7 +179,7 @@ footer{padding:28px 0 42px;color:#96889b;font-size:12px;line-height:1.6}
     <div class="kicker">Live Transparency</div>
     <h2>Latest Contributions</h2>
     <p class="lead">
-      Recent inbound transfers detected on-chain for the Community Fund wallet.
+      Recent inbound transfers detected on-chain for the Community Fund wallet and its USDC / NeneTH token accounts.
       This list is informational and updates from public Solana transaction data.
     </p>
     <div class="card">
@@ -264,7 +264,7 @@ footer{padding:28px 0 42px;color:#96889b;font-size:12px;line-height:1.6}
     <strong>NeneTH / Nene Royal Fans</strong><br>
     Independent fan-community initiative. Not affiliated with Nene Royal,
     America's Got Talent, NBC, or official management. Contributions are voluntary
-    and do not represent an investment, equity, or guarantee of financial return.<br><span style="opacity:.65">Campaign page: V6 Expanded Contribution History</span>
+    and do not represent an investment, equity, or guarantee of financial return.<br><span style="opacity:.65">Campaign page: V7 Token Account Activity Fix</span>
   </div>
 </footer>
 
@@ -362,12 +362,46 @@ function formatTime(ts){
   return new Date(ts * 1000).toLocaleString();
 }
 
-async function getRecentSignatures(limit=100){
-  const result = await rpc("getSignaturesForAddress", [
+async function getOwnedTokenAccountsForActivity(){
+  const result = await rpc("getTokenAccountsByOwner", [
     FUND_WALLET,
-    { limit, commitment: "confirmed" }
+    { programId: "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA" },
+    { encoding: "jsonParsed", commitment: "confirmed" }
   ]);
-  return result || [];
+
+  const accounts = [];
+  for (const item of result.value || []){
+    const mint = item.account?.data?.parsed?.info?.mint;
+    if (mint === FUND_USDC_MINT || mint === FUND_NENETH_MINT){
+      accounts.push(item.pubkey);
+    }
+  }
+  return accounts;
+}
+
+async function getRecentSignatures(limit=100){
+  const addresses = [FUND_WALLET, ...(await getOwnedTokenAccountsForActivity())];
+  const all = [];
+  const seen = new Set();
+
+  for (const address of addresses){
+    try{
+      const result = await rpc("getSignaturesForAddress", [
+        address,
+        { limit, commitment: "confirmed" }
+      ]);
+      for (const s of result || []){
+        if (seen.has(s.signature)) continue;
+        seen.add(s.signature);
+        all.push(s);
+      }
+    }catch(e){
+      console.warn("Signature scan failed for", address, e);
+    }
+  }
+
+  all.sort((a,b) => (b.blockTime || 0) - (a.blockTime || 0));
+  return all;
 }
 
 async function getParsedTx(signature){
@@ -442,7 +476,7 @@ async function loadContributionActivity(){
     const sigs = await getRecentSignatures(100);
     const results = [];
 
-    for (const s of sigs.slice(0, 60)){
+    for (const s of sigs.slice(0, 100)){
       try{
         const tx = await getParsedTx(s.signature);
         const inbound = collectInboundFromParsedTx(tx);
