@@ -161,9 +161,55 @@
     @media(max-width:850px){.status-grid{grid-template-columns:1fr 1fr}}
     @media(max-width:560px){.status-grid{grid-template-columns:1fr}}
 
+  
+    .topnav{
+      position:sticky;top:0;z-index:80;
+      background:rgba(7,9,13,.94);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+    }
+    .topnav-inner{
+      max-width:1180px;margin:0 auto;padding:12px 24px;
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+    }
+    .topnav-brand{font-weight:900;white-space:nowrap}
+    .topnav-links{display:flex;flex-wrap:wrap;gap:8px}
+    .topnav-links a{
+      text-decoration:none;color:#fff;
+      border:1px solid #333a4b;background:#0e1219;
+      padding:8px 11px;border-radius:10px;font-size:12px;font-weight:750;
+    }
+    .topnav-links a.primary{
+      border:0;color:#170b12;
+      background:linear-gradient(90deg,var(--gold),var(--rose));
+    }
+    @media(max-width:760px){
+      .topnav-inner{align-items:flex-start;flex-direction:column;padding:10px 16px}
+      .topnav-links{width:100%}
+      .topnav-links a{font-size:11px;padding:7px 9px}
+    }
+
   </style>
 </head>
 <body>
+
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <div class="topnav-brand">Nene Royal Fans 👑</div>
+      <div class="topnav-links">
+        <a href="/">Home</a>
+        <a href="/#about">About Nene</a>
+        <a href="/#agt">AGT Journey</a>
+        <a href="/#music">Music</a>
+        <a href="/agt-final.html">Join the Support</a>
+        <a href="/collector.html">Collector</a>
+        <a href="/buy.html">Buy NeneTH</a>
+        <a href="https://t.me/NeneRoyalFans" target="_blank" rel="noopener">Telegram</a>
+        <a class="primary" href="/transparency.html">Transparency</a>
+      </div>
+    </div>
+  </nav>
+
   <div class="wrap">
     <section class="hero">
       <div class="eyebrow">Nene Royal Fans • Solana Mainnet</div>
@@ -345,6 +391,10 @@
         <div class="warning" style="margin-top:14px">
           The locked 250M NeneTH cannot be canceled, transferred, or unlocked before the scheduled unlock date. After the 250M lock and the 1.25M NeneTH Streamflow token fee, the remaining treasury balance is about 128.776M NeneTH and stays liquid for disclosed operational, liquidity, and community purposes.
         </div>
+
+        <div class="risk-note">
+          <b>Streamflow fee activity:</b> CoinMarketCap DexScan may display a transaction labeled <strong>“Streamflow Treasury”</strong> showing approximately <strong>-1.25M NeneTH</strong> and a corresponding USDC amount. This 1.25M NeneTH matches the 0.5% token fee charged by Streamflow when the 250M NeneTH treasury lock was created. It is disclosed here as a third-party service fee associated with the lock, not as an independent NeneTH project treasury sale.
+        </div>
       </section>
 
       <section class="card span-6">
@@ -403,6 +453,7 @@
           <div class="row"><div class="label">CoinMarketCap DexScan</div><div class="value" style="color:var(--green)">Market Data Indexed</div></div>
           <div class="row"><div class="label">CoinMarketCap Full Verification</div><div class="value">Not yet completed</div></div>
           <div class="row"><div class="label">GeckoTerminal / Bubblemaps</div><div class="value" style="color:var(--green)">Wallet cluster updated after treasury lock</div></div>
+          <div class="row"><div class="label">Streamflow Fee Disclosure</div><div class="value" style="color:var(--green)">1.25M NeneTH service fee documented</div></div>
         </div>
       </section>
 
@@ -420,6 +471,10 @@
           <div class="proof">
             <div><strong>Treasury Lock — Streamflow</strong><div class="muted">250,000,000 NeneTH • immutable • unlock 29 Sep 2027 • public proof</div></div>
             <a href="https://app.streamflow.finance/contract/solana/mainnet/5kqsXJNNqosDkTdhZnX7BKhJd2HPYJWzga8bSFAAPjAX" target="_blank" rel="noopener">Verify Treasury Lock</a>
+          </div>
+          <div class="proof">
+            <div><strong>Streamflow Lock Fee Disclosure</strong><div class="muted">1,250,000 NeneTH token fee (0.5%) charged during treasury-lock creation; may appear on market trackers under a Streamflow-related label</div></div>
+            <a href="https://app.streamflow.finance/contract/solana/mainnet/5kqsXJNNqosDkTdhZnX7BKhJd2HPYJWzga8bSFAAPjAX" target="_blank" rel="noopener">View Lock Contract</a>
           </div>
           <div class="proof">
             <div><strong>Founder Vesting — Streamflow</strong><div class="muted">200M NeneTH • immutable vesting contract</div></div>
@@ -466,7 +521,7 @@
     <footer>
       Nene Royal Fans • From Thailand to the world 🌎<br>
       Public proofs are provided for transparency and independent verification.<br>Last updated: 10 Sep 2026
-    <div style="opacity:.65;margin-top:6px">Transparency page: V6 Current Treasury Status</div>
+    <div style="opacity:.65;margin-top:6px">Transparency page: V8 Navigation + Streamflow Fee Disclosure</div>
 </footer>
   </div>
 
