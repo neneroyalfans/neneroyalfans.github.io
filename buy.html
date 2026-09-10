@@ -136,6 +136,22 @@ footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
       Wallet not connected.
     </div>
 
+    <div style="border:1px solid #5a3f33;background:linear-gradient(135deg,#15100d,#100c13);border-radius:15px;padding:14px;margin-bottom:12px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div>
+          <div style="font-size:13px;font-weight:850">💳 Need USDC?</div>
+          <div style="font-size:10px;color:#aaa2ad;margin-top:3px">
+            Buy USDC with card / local payment, choose <b>USDC on Solana</b>, then return here to swap for NeneTH.
+          </div>
+        </div>
+        <button class="btn primary" id="buyUsdcCardBtn" type="button" style="min-width:180px">Buy USDC with Card</button>
+      </div>
+      <div style="margin-top:8px;color:#8f8794;font-size:9px;line-height:1.45">
+        On-ramp availability, payment methods, KYC, limits and fees depend on your country and the selected provider.
+        The card purchase is handled by a third-party on-ramp, not by Nene Royal Fans.
+      </div>
+    </div>
+
     <div style="border:1px solid #352a3d;background:#0f0c13;border-radius:15px;padding:14px;margin-bottom:10px">
       <div style="font-size:11px;color:#9f96a6;margin-bottom:7px">You pay</div>
       <div style="display:flex;align-items:center;gap:10px">
@@ -203,9 +219,14 @@ footer{padding:20px 0 42px;text-align:center;color:#807786;font-size:12px}
 </section>
 </main>
 
-<footer><div class="wrap">NeneTH is an independent fan-community token. It is not an official token of Nene Royal, AGT, NBC, or any affiliated organization and does not represent ownership, endorsement, equity, or a promise of profit.<br><br><span style="opacity:.55">Buy page: Production V25 Clean Buy</span></div></footer>
+<footer><div class="wrap">NeneTH is an independent fan-community token. It is not an official token of Nene Royal, AGT, NBC, or any affiliated organization and does not represent ownership, endorsement, equity, or a promise of profit.<br><br><span style="opacity:.55">Buy page: Production V26 Card On-Ramp</span></div></footer>
 
 <script type="module">
+
+const buyUsdcCardBtn = document.getElementById("buyUsdcCardBtn");
+buyUsdcCardBtn?.addEventListener("click", () => {
+  window.open("https://buy.onramper.com/", "_blank", "noopener,noreferrer");
+});
 
 function updatePriceImpactWarning(pct){
   const el = document.getElementById("priceImpactWarning");
