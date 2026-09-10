@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="NeneTH transparency page: token supply, authority status, wallet allocations, founder vesting, Raydium liquidity and LP lock proofs." />
+  <meta name="description" content="NeneTH transparency page: token supply, treasury split, Streamflow treasury lock proof, founder vesting, Raydium liquidity, and public wallet map context." />
   <title>NeneTH Transparency | Nene Royal Fans</title>
   <style>
     :root{
@@ -148,6 +148,19 @@
     @media(max-width:850px){.wallet-node{grid-column:span 6}}
     @media(max-width:560px){.wallet-node{grid-column:span 12}}
 
+  
+    .status-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+    .status-card{padding:18px;border-radius:16px;background:#0c1017;border:1px solid #303747;text-align:center}
+    .status-card .num{font-size:30px;font-weight:900;line-height:1.1;margin:4px 0}
+    .status-card .cap{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.11em}
+    .status-card.locked{border-color:#315d49}
+    .status-card.liquid{border-color:#6b3c63}
+    .status-card.cluster{border-color:#5e4b2d}
+    .status-card.lp{border-color:#2f6274}
+    .proof-cta{display:inline-block;margin-top:14px;text-decoration:none;color:#fff;background:linear-gradient(90deg,#6c52ff,#c84cff);padding:10px 14px;border-radius:10px;font-weight:800}
+    @media(max-width:850px){.status-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:560px){.status-grid{grid-template-columns:1fr}}
+
   </style>
 </head>
 <body>
@@ -155,15 +168,41 @@
     <section class="hero">
       <div class="eyebrow">Nene Royal Fans • Solana Mainnet</div>
       <h1>NeneTH Transparency</h1>
-      <p class="sub">Public on-chain information for the independent NeneTH fan-community token project, including supply controls, allocation wallets, founder vesting, Raydium liquidity, LP lock proofs, wallet-role mapping, and current verification status.</p>
+      <p class="sub">Public on-chain information for the independent NeneTH fan-community token project. The latest update separates the treasury into a 250M NeneTH locked reserve and the remaining liquid treasury, with public Streamflow proof and updated Bubblemaps cluster context.</p>
       <div class="badge-row">
         <span class="badge ok">✓ Mint Authority Revoked</span>
         <span class="badge ok">✓ Freeze Authority Revoked</span>
         <span class="badge ok">✓ Founder Vesting Active</span>
         <span class="badge ok">✓ LP Locks Active</span>
         <span class="badge ok">✓ 250M Treasury Locked</span>
-        <span class="badge">Jupiter VRFD: Pending Review</span>
+        <span class="badge">Wallet Map Updated: Treasury Split Live</span>
+
       </div>
+
+      <div class="status-grid">
+        <div class="status-card locked">
+          <div class="cap">Treasury Locked</div>
+          <div class="num" style="color:var(--green)">250M</div>
+          <div class="muted">25.00% of total supply</div>
+        </div>
+        <div class="status-card liquid">
+          <div class="cap">Liquid Treasury</div>
+          <div class="num" style="color:var(--rose)">12.88%</div>
+          <div class="muted">~128.776M NeneTH</div>
+        </div>
+        <div class="status-card cluster">
+          <div class="cap">Active Linked Cluster</div>
+          <div class="num" style="color:var(--gold)">41.35%</div>
+          <div class="muted">Latest Bubblemaps snapshot</div>
+        </div>
+        <div class="status-card lp">
+          <div class="cap">Raydium Vault</div>
+          <div class="num" style="color:var(--cyan)">13.52%</div>
+          <div class="muted">DEX liquidity reserve</div>
+        </div>
+      </div>
+
+      <a class="proof-cta" href="https://app.streamflow.finance/contract/solana/mainnet/5kqsXJNNqosDkTdhZnX7BKhJd2HPYJWzga8bSFAAPjAX" target="_blank" rel="noopener">Verify 250M Treasury Lock on Streamflow</a>
     </section>
 
     <main class="grid">
@@ -193,7 +232,7 @@
       </section>
 
       <section class="card span-12">
-        <div class="title">Token Allocation Plan</div>
+        <div class="title">Original Token Allocation Policy</div>
         <div class="alloc">
           <div class="mini founder"><div>Founder</div><div class="pct">20%</div><div class="muted">200,000,000 vested</div></div>
           <div class="mini treasury"><div>Treasury</div><div class="pct">50%</div><div class="muted">500,000,000 allocation</div></div>
@@ -201,7 +240,7 @@
           <div class="mini liquidity"><div>Liquidity</div><div class="pct">10%</div><div class="muted">100,000,000 deployed to LP</div></div>
         </div>
         <div class="warning" style="margin-top:16px">
-          Treasury transparency note: 380,000 NeneTH was used as the Streamflow token fee to create the Founder vesting contract for the full 200,000,000 NeneTH allocation. The Treasury allocation remains 50% by policy, while the current Treasury token balance is reduced by this documented project expense.
+          Allocation-policy note: the percentages above describe the original allocation plan, not current freely movable balances. Treasury balances have since changed through disclosed project expenses, liquidity activity, and the 250M NeneTH Streamflow treasury lock.
         </div>
       </section>
 
@@ -209,8 +248,8 @@
         <div class="title">Allocation Wallets</div>
         <div class="rows">
           <div class="row"><div class="label">Founder 20%</div><div class="value mono">Gc8zrvYcrrgeDaGH2svBAtL3VByR6GW34ghg1H4i35gA</div></div>
-          <div class="row"><div class="label">Treasury 50%</div><div class="value mono">BftuVZMhMEZ8Zf3zUrvQ7834K1hsHSWtVAXL5vFQ9Tfd</div></div>
-          <div class="row"><div class="label">Community 20%</div><div class="value mono">DnEV5NCKuPdp1JMDUzYrNMXN6B2oTKqHuK55C6XdfELb</div></div>
+          <div class="row"><div class="label">Treasury Wallet (original 50% allocation)</div><div class="value mono">BftuVZMhMEZ8Zf3zUrvQ7834K1hsHSWtVAXL5vFQ9Tfd</div></div>
+          <div class="row"><div class="label">Community Allocation Wallet</div><div class="value mono">DnEV5NCKuPdp1JMDUzYrNMXN6B2oTKqHuK55C6XdfELb</div></div>
           <div class="row"><div class="label">Liquidity 10%</div><div class="value mono">8MurAZW7PMEu9pRGi1XF1Spv3YjCUEQ5VMCf19o61YnU</div></div>
         </div>
       </section>
@@ -219,15 +258,15 @@
       <section class="card span-12">
         <div class="title">Wallet Role Map & Cluster Context</div>
         <p class="muted" style="margin-top:0">
-          Bubblemaps currently groups several project-related addresses into the same transfer cluster. A cluster shows on-chain relationships between addresses; it does not by itself prove that all addresses are the same holder or that all balances are freely tradable.
+          The latest Bubblemaps snapshot after the Streamflow treasury lock shows an active linked cluster of <strong>41.35%</strong>. This page now separates the treasury into <strong>25.00% locked reserve</strong> and <strong>~12.88% liquid treasury</strong> so community members can distinguish long-term locked holdings from movable balances.
         </p>
 
         <div class="wallet-map">
           <div class="wallet-node project">
-            <h3>Treasury — Total</h3>
-            <div class="pct2" style="color:var(--gold)">~38.00%</div>
-            <div class="role">Project-controlled treasury before lock • observed balance 380,026,051.356 NeneTH</div>
-            <div class="addr">BftuVZMhMEZ8Zf3zUrvQ7834K1hsHSWtVAXL5vFQ9Tfd</div>
+            <h3>Active Project Cluster</h3>
+            <div class="pct2" style="color:var(--gold)">41.35%</div>
+            <div class="role">Current Bubblemaps linked cluster after treasury lock • excludes the 250M Streamflow lock contract from the active cluster view</div>
+            <div class="addr">Main linked addresses include Treasury, Community Allocation, Community Fund, and smaller project-related wallets</div>
           </div>
 
           <div class="wallet-node project">
@@ -239,49 +278,49 @@
 
           <div class="wallet-node project">
             <h3>Treasury — Liquid Balance</h3>
-            <div class="pct2" style="color:var(--rose)">~13.00%</div>
-            <div class="role">Remaining treasury available for operations / liquidity / future disclosed use • approx. 130,026,051.356 NeneTH</div>
-            <div class="addr">Same Treasury Wallet: BftuVZMhMEZ8Zf3zUrvQ7834K1hsHSWtVAXL5vFQ9Tfd</div>
+            <div class="pct2" style="color:var(--rose)">12.88%</div>
+            <div class="role">Remaining treasury available for disclosed operations / liquidity / future community use • approx. 128,776,051.356 NeneTH after 250M lock and 1.25M lock fee</div>
+            <div class="addr">Treasury Wallet: BftuVZMhMEZ8Zf3zUrvQ7834K1hsHSWtVAXL5vFQ9Tfd</div>
           </div>
 
           <div class="wallet-node community">
             <h3>Community Allocation</h3>
-            <div class="pct2" style="color:#b890ff">~18.90%</div>
+            <div class="pct2" style="color:#b890ff">18.90%</div>
             <div class="role">Community allocation wallet • originally funded with 200M NeneTH</div>
             <div class="addr">DnEV5NCKuPdp1JMDUzYrNMXN6B2oTKqHuK55C6XdfELb</div>
           </div>
 
           <div class="wallet-node fund">
             <h3>AGT Community Fund</h3>
-            <div class="pct2" style="color:var(--rose)">~6.65%</div>
+            <div class="pct2" style="color:var(--rose)">6.65%</div>
             <div class="role">Separate campaign-support wallet • contributions tracked publicly</div>
             <div class="addr">3ZEzt6KWpmtM9Z2QfVsbQ6kgvmkAQRn5C2TpHfoAKyw9</div>
           </div>
 
           <div class="wallet-node lp">
             <h3>Raydium Liquidity Vault</h3>
-            <div class="pct2" style="color:var(--cyan)">~13.40%</div>
+            <div class="pct2" style="color:var(--cyan)">13.52%</div>
             <div class="role">DEX liquidity reserve • not a normal holder wallet</div>
             <div class="addr">Pool: 5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A</div>
           </div>
 
           <div class="wallet-node external">
             <h3>Founder Vesting / Contract Holdings</h3>
-            <div class="pct2">~20%</div>
+            <div class="pct2">20.00%</div>
             <div class="role">Founder allocation is subject to the published Streamflow vesting contract. Contract-held balances are disclosed separately from freely tradable wallets.</div>
             <div class="addr">Streamflow Contract: 4tfcg6RNAecsF5jPHtUdTabbi1XNLQa5yxJLfZJ626Lw</div>
           </div>
 
           <div class="wallet-node project">
             <h3>Original Creator / Setup Wallet</h3>
-            <div class="pct2" style="color:var(--green)">~0.02%</div>
+            <div class="pct2" style="color:var(--green)">0.02%</div>
             <div class="role">Original project setup / creator-linked wallet</div>
             <div class="addr">Gc8zrvYcrrgeDaGH2svBAtL3VByR6GW34ghg1H4i35gA</div>
           </div>
         </div>
 
         <div class="risk-note">
-          <b>Cluster-risk context:</b> Bubblemaps has shown a large transfer cluster because some project wallets received tokens or SOL from related project addresses. The project does not present those linked wallets as independent organic buyers. Treasury, locked treasury reserve, liquid treasury, community allocation, campaign funds, founder vesting, and liquidity reserves have different purposes and are disclosed separately here.
+          <b>Cluster-risk context:</b> Bubblemaps previously showed a larger combined cluster because the treasury wallet still held the pre-lock reserve. After moving 250M NeneTH into the public Streamflow treasury lock, the active linked cluster is now visibly lower. The project does not present treasury, locked treasury reserve, liquid treasury, community allocation, campaign funds, founder vesting, and liquidity reserves as independent organic buyers.
         </div>
 
         <div class="warning" style="margin-top:14px">
@@ -293,9 +332,10 @@
       <section class="card span-6">
         <div class="title">Treasury Long-Term Lock</div>
         <div class="rows">
-          <div class="row"><div class="label">Treasury Before Lock</div><div class="value">380,026,051.356 NeneTH (~38.00%)</div></div>
+          <div class="row"><div class="label">Treasury Before Lock</div><div class="value">380,026,051.356 NeneTH (38.00%)</div></div>
           <div class="row"><div class="label">Locked Reserve</div><div class="value" style="color:var(--green)">250,000,000 NeneTH (25.00%)</div></div>
-          <div class="row"><div class="label">Remaining Liquid Treasury</div><div class="value">130,026,051.356 NeneTH (~13.00%)</div></div>
+          <div class="row"><div class="label">Lock Creation Fee</div><div class="value">1,250,000 NeneTH (0.125%) + ~0.17 SOL fees</div></div>
+          <div class="row"><div class="label">Remaining Liquid Treasury</div><div class="value">128,776,051.356 NeneTH (12.88%)</div></div>
           <div class="row"><div class="label">Lock Provider</div><div class="value">Streamflow</div></div>
           <div class="row"><div class="label">Unlock Date</div><div class="value">29 Sep 2027, 12:00 AM GMT+7</div></div>
           <div class="row"><div class="label">Unlocked</div><div class="value">0%</div></div>
@@ -303,7 +343,7 @@
           <div class="row"><div class="label">Contract ID</div><div class="value">5kqsXJNNqosDkTdhZnX7BKhJd2HPYJWzga8bSFAAPjAX</div></div>
         </div>
         <div class="warning" style="margin-top:14px">
-          The locked 250M NeneTH cannot be canceled, transferred, or unlocked before the scheduled unlock date. The remaining treasury balance stays liquid for disclosed operational, liquidity, and community purposes.
+          The locked 250M NeneTH cannot be canceled, transferred, or unlocked before the scheduled unlock date. After the 250M lock and the 1.25M NeneTH Streamflow token fee, the remaining treasury balance is about 128.776M NeneTH and stays liquid for disclosed operational, liquidity, and community purposes.
         </div>
       </section>
 
@@ -362,7 +402,7 @@
           <div class="row"><div class="label">DEXScreener</div><div class="value" style="color:var(--green)">Pair Indexed</div></div>
           <div class="row"><div class="label">CoinMarketCap DexScan</div><div class="value" style="color:var(--green)">Market Data Indexed</div></div>
           <div class="row"><div class="label">CoinMarketCap Full Verification</div><div class="value">Not yet completed</div></div>
-          <div class="row"><div class="label">GeckoTerminal / CoinGecko</div><div class="value">Planned next verification step</div></div>
+          <div class="row"><div class="label">GeckoTerminal / Bubblemaps</div><div class="value" style="color:var(--green)">Wallet cluster updated after treasury lock</div></div>
         </div>
       </section>
 
@@ -378,7 +418,7 @@
             <a href="https://solscan.io/token/F5SaYu1BjHxcnjgPsRqEVZhmAmkiz7DP2nQ5aKvRgTt5" target="_blank" rel="noopener">View on Solscan</a>
           </div>
           <div class="proof">
-            <div><strong>Treasury Lock — Streamflow</strong><div class="muted">250,000,000 NeneTH • immutable • unlock 29 Sep 2027</div></div>
+            <div><strong>Treasury Lock — Streamflow</strong><div class="muted">250,000,000 NeneTH • immutable • unlock 29 Sep 2027 • public proof</div></div>
             <a href="https://app.streamflow.finance/contract/solana/mainnet/5kqsXJNNqosDkTdhZnX7BKhJd2HPYJWzga8bSFAAPjAX" target="_blank" rel="noopener">Verify Treasury Lock</a>
           </div>
           <div class="proof">
@@ -396,6 +436,10 @@
           <div class="proof">
             <div><strong>Additional LP Lock — StakePoint</strong><div class="muted">1,700 LP • 365 days • unlock 9 Sep 2027 • Lock ID #1788921961655</div></div>
             <a href="https://stakepoint.app/locks" target="_blank" rel="noopener">Open StakePoint</a>
+          </div>
+                    <div class="proof">
+            <div><strong>Bubblemaps Snapshot Context</strong><div class="muted">Active project-linked cluster now ~41.35% after separating the 250M locked reserve from the liquid treasury</div></div>
+            <a href="https://www.geckoterminal.com/solana/pools/5G2hpNFwFLvTpSjWsJgDNzSYmuAqQPJXN31YUrHP5E9A" target="_blank" rel="noopener">Open GeckoTerminal</a>
           </div>
         </div>
       </section>
@@ -422,7 +466,7 @@
     <footer>
       Nene Royal Fans • From Thailand to the world 🌎<br>
       Public proofs are provided for transparency and independent verification.<br>Last updated: 10 Sep 2026
-    <div style="opacity:.65;margin-top:6px">Transparency page: V4 Treasury Lock</div>
+    <div style="opacity:.65;margin-top:6px">Transparency page: V6 Current Treasury Status</div>
 </footer>
   </div>
 
